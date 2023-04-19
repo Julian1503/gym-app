@@ -1,25 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './components/navbar/navbar';
+import { Box } from '@mui/material';
+import classes from './app.module.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar/>
+      <Box className={classes.hero}>
+        <Box className={classes.image_container}>
+        </Box>
+        <Box className={classes.hero_title_container}>
+              <h1>Sweat now, shine later.</h1>
+        </Box>
+      </Box>
+        <Box sx={{height:'87vh'}}>
+
+        </Box>
+    </>
   );
 }
 
