@@ -49,15 +49,16 @@ const Navbar = () => {
         <AppBar sx={{
             background: '#1F1F21',
             color: "#F2F2F2",
-            opacity: {md:0.9},
+            opacity: {md:0.98},
             position: {md:"fixed", xs:"relative"},
             borderRadius: {md:"20px"},
             height: "90px",
             width: {xs: "100%", md: "60%"},
-            boxShadow: '2px 4px 8px rgba(0, 0, 0, 1)',
+            boxShadow: {md:'2px 4px 8px rgba(0, 0, 0, 1)'},
             zIndex: "1",
             margin: {md: "10px auto"},
-        }}  style={{top: 0, left: 0, right: 0 }}>
+            top: 0, left: 0, right: 0
+        }}>
             <StyledToolbar>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
