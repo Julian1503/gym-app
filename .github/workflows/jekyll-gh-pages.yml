@@ -42,6 +42,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages
-          GITHUB_TOKEN: ${{ github.token }}
+          token: ${{ github.token }}
           BUILD_FROM: development
           folder: build
