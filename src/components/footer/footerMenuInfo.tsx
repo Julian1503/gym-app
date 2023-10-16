@@ -11,8 +11,8 @@ export function FooterMenuInfo({title, content}: FooterMenuInfoProps) {
     return <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <Box sx={{fontSize: "1rem"}}>{title}</Box>
         {
-            content.map((item) => (
-                <Box sx={{fontSize: "0.8rem"}}>{item}</Box>
+            content.map((item, i) => (
+                <Box sx={{fontSize: "0.8rem"}} key={i}>{item}</Box>
             ))
         }
     </Box>;

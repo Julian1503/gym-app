@@ -1,38 +1,49 @@
 import React, {Fragment} from 'react';
-import Navbar from './components/navbar/navbar';
-import ShowSpecialty from "./components/specialty/showSpecialty";
-import Hero from "./components/hero/hero";
-import Footer from "./components/footer/footer";
+import MainPage from "./pages/main/mainPage";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Login from "./pages/login/login";
+import Calendar from "./components/user-menu/calendar";
+import {ExercisePage} from "./pages/crud/exercise";
+import {SpecialtyPage} from "./pages/crud/specialty";
+import {TrainerPage} from "./pages/crud/trainer";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import {MemberPage} from "./pages/crud/member";
+import {MembershipPage} from "./pages/crud/membership";
+import {PlanPage} from "./pages/crud/plan";
+import AdminPage from "./pages/adminPage";
+import {useSelector} from "react-redux";
+import {RootState} from "./store/store";
+import {ProtectedRoute} from "./pages/login/protectedRoute";
+import {PlanCalendar} from "./components/plan/planCalendar";
+import Dashboard from "./pages/dashboard";
+import NewsDetailPage from "./components/news/NewsDetailPage";
 
-const specialties = [
-    {
-        "specialtyId": 1,
-        "name": "Zumba",
-        "description": "A high-energy dance workout that helps to improve cardiovascular fitness and overall body strength.",
-        "photoUrl": "https://images.unsplash.com/photo-1527933053326-89d1746b76b9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-    },
-    {
-        "specialtyId": 2,
-        "name": "Swimming",
-        "description": "A low-impact workout that helps to improve cardiovascular fitness and overall body strength.",
-        "photoUrl": "https://images.unsplash.com/photo-1530549387789-4c1017266635?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-    },
-    {
-        "specialtyId": 3,
-        "name": "Weightlifting",
-        "description": "A strength-training workout that helps to improve overall body strength and muscle definition.",
-        "photoUrl": "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-    }
-];
+
 
 function App() {
-  return (
-    <Fragment >
-      <Navbar/>
-        <Hero/>
-        <ShowSpecialty specialties={specialties}/>
-        <Footer/>
-    </Fragment>
+    return (
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <BrowserRouter>
+                <Routes>
+                    <Route element={<Login/>} path="/login"/>
+                    <Route element={<MainPage/>} path="/"/>
+                    {/*<Route path="*" element={<Not found/>}/>*/}
+                    <Route element={<ProtectedRoute redirectPath="/login" />}>
+                        <Route element={<Dashboard/>} path="/dashboard"/>
+                        <Route element={<ExercisePage/>} path="/exercise"/>
+                        <Route element={<SpecialtyPage/>} path="/specialty"/>
+                        <Route element={<TrainerPage/>} path="/trainer"/>
+                        <Route element={<MemberPage/>} path="/member"/>
+                        <Route element={<MembershipPage/>} path="/membership"/>
+                        <Route element={<AdminPage/>} path="/admin"/>
+                        <Route element={<PlanCalendar/>} path="/plan/:id"/>
+                        <Route element={<NewsDetailPage/>} path="/news/:newsId"/>
+                    </Route>
+                </Routes>
+        </BrowserRouter>
+    </LocalizationProvider>
+
   );
 }
 

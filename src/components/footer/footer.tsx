@@ -5,15 +5,22 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import {FooterMenuInfo} from "./footerMenuInfo";
+import {useTheme} from "@mui/material/styles";
 
+
+/* The code defines a functional component called `Footer`. It uses the `useTheme` hook from the Material-UI library to
+access the current theme. */
 const Footer = () => {
+
+    const theme = useTheme();
+
     return (
         <Box sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            background: "#1F1F21",
+            background: theme.palette.background.default,
             color: "#fff",
             position: "relative",
             gap: 1.5,
@@ -47,9 +54,6 @@ const Footer = () => {
                 Copyright © 2021 Gym. All rights reserved.
             </Box>
         </Box>
-
-
-
     )
 }
 

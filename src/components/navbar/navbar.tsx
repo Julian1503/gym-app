@@ -13,24 +13,44 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import {styled} from "@mui/material/styles";
+import { useTheme } from '@mui/material/styles';
+import {Link, Navigate, useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store";
+import Logo from "./logo";
 
 const StyledToolbar = styled(Toolbar)(({theme}) => ({
     alignItems: "center",
     padding: theme.spacing(2),
 }));
 
-const pages = ["Products", "Pricing", "About Us"];
+/* The above code is a TypeScript React component that represents a Navbar. It is responsible for rendering the navigation
+bar at the top of the page. */
+const pages = ["services","why us?", "contact us"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const Navbar = () => {
     const [anchorElNav, setAnchorNav] = React.useState<null | HTMLElement>(
-        null
+            null
     );
     const [anchorElUser, setAnchorUser] = React.useState<null | HTMLElement>(
         null
     );
-    const [isLogedIn, setLogedIn] = React.useState<boolean>(
-        false
-    );
+    const [showShadow, setShowShadow] = React.useState(false);
+
+    const handleScroll = () => {
+        const scrollY = window.scrollY;
+        if (scrollY > 10) {
+            setShowShadow(true);
+        } else {
+            setShowShadow(false);
+        }
+    };
+
+    React.useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorNav(event.currentTarget);
     };
@@ -45,41 +65,51 @@ const Navbar = () => {
     const handleCloseUserMenu = () => {
         setAnchorUser(null);
     };
+
+    const theme = useTheme();
+
+    const navigator = useNavigate();
+
+    const handleLoginButton = () => {
+        navigator("/login");
+    };
+
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+
     return (
         <AppBar sx={{
-            background: '#1F1F21',
+            background: "linear-gradient(90deg, #1F1F21 0%, #2A2A2E 100%)",
             color: "#F2F2F2",
             opacity: {md:0.98},
             position: {md:"fixed", xs:"relative"},
             borderRadius: {md:"20px"},
             height: "90px",
             width: {xs: "100%", md: "60%"},
-            boxShadow: {md:'2px 4px 8px rgba(0, 0, 0, 1)'},
-            zIndex: "1",
+            boxShadow: showShadow
+                ? { md: "0px 4px 10px rgba(0, 0, 0, 0.25)" }
+                : { md: "none" },
+            zIndex: "10",
             margin: {md: "10px auto"},
             top: 0, left: 0, right: 0
         }}>
             <StyledToolbar>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <AdbIcon sx={{display: {xs: "none", md: "flex"}, mr: 1}}/>
-                        <Typography
+                        <Logo
                             variant="h6"
-                            noWrap
-                            component="a"
                             href="/"
                             sx={{
                                 mr: 2,
-                                display: {xs: "none", md: "flex"},
                                 fontFamily: "monospace",
                                 fontWeight: 700,
                                 letterSpacing: ".3rem",
                                 color: "inherit",
                                 textDecoration: "none",
                             }}
-                        >
-                            GYMNASIUM
-                        </Typography>
+                            children="GYMNASIUM"
+                            iconDisplay={{display: {xs: "none", md: "flex"}}}
+                            textDisplay={{display: {xs: "none", md: "flex"}}}
+                        />
                         <Box sx={{flexGrow: 1, display: {xs: "flex", md: "flex"}, justifyContent: "center"}}>
                             <IconButton
                                 sx={{
@@ -119,72 +149,40 @@ const Navbar = () => {
                                 ))}
                             </Menu>
                         </Box>
-                        <Box sx={{flexGrow: 1,
-                            justifyContent: "center", display: {xs: "flex", md: "none", mr: 1}}}>
-                            <AdbIcon sx={{ mr: "10px" }}/>
-                            <Typography
-                                variant="h5"
-                                noWrap
-                                component="a"
-                                href=""
-                                sx={{
-                                    flexGrow: 1,
-                                    fontFamily: "monospace",
-                                    fontWeight: 700,
-                                    letterSpacing: ".3rem",
-                                    color: "inherit",
-                                    textDecoration: "none",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                LOGO
-                            </Typography>
-                        </Box>
+                        <Logo
+                            variant="h5"
+                            href=""
+                            sx={{
+                                flexGrow: 1,
+                                fontFamily: "monospace",
+                                fontWeight: 700,
+                                letterSpacing: ".3rem",
+                                color: "inherit",
+                                textDecoration: "none",
+                                justifyContent: "center",
+                            }}
+                            children="GYMNASIUM"
+                            iconDisplay={{display: {xs: "flex", md: "none"}, mr: "10px"}}
+                            textDisplay={{display: {xs: "flex", md: "none", mr: 1}}}
+                        />
                         <Box sx={{flexGrow: 1, display: {xs: "none", md: "flex"}}}>
                             {pages.map((page) => (
                                 <Button
                                     key={page}
-                                    onClick={handleCloseNavMenu}
                                     sx={{my: 2, color: "inherit", display: "block"}}
+                                    onClick={() => {
+                                        const element = document.getElementById(page);
+                                        if (element) {
+                                            element.scrollIntoView({ behavior: 'smooth' });
+                                        }
+                                    }}
                                 >
                                     {page}
                                 </Button>
                             ))}
                         </Box>
-
-                        {isLogedIn ? <Box sx={{flexGrow: 0}}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                    <Avatar
-                                        alt="Remy Sharp"
-                                        src="/static/images/avatar/2.jpg"
-                                    />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{mt: "45px"}}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: "top",
-                                    horizontal: "right",
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: "top",
-                                    horizontal: "right",
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">{setting}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box> : <Button sx={{backgroundColor: "#007F5F", fontWeight: "bold", justifyContent: "center", flexGrow: 1, display: {xs: "flex", md: "flex"}}}
-                                         onClick={() => setLogedIn(true)}>Login</Button>}
+                        <Button sx={{backgroundColor: theme.palette.primary.main, color:"white", fontFamily:"Lora", fontWeight: "700", justifyContent: "center", flexGrow: 1, display: {xs: "flex", md: "flex"}}}
+                                         onClick={handleLoginButton}>Login</Button>
                     </Toolbar>
                 </Container>
             </StyledToolbar>
