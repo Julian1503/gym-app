@@ -1,5 +1,6 @@
 import {DataGrid, GridColDef} from '@mui/x-data-grid';
-import {Box, Button} from '@mui/material';
+import {Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
+import {useState} from "react";
 
 interface ListItemsProps<T> {
     items: T[];
@@ -23,7 +24,8 @@ export function ListItems<T>({
     const columns : GridColDef[] = columnNames.map((column: string) => ({
         field: column,
         headerName: column.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
-        flex: 1
+        flex: 1,
+        minWidth: 150,
     }))
     columns.push({
         field: "actions",
@@ -32,11 +34,11 @@ export function ListItems<T>({
         align: 'center',
         sortable: false,
         filterable: false,
-        minWidth: 200,
+        minWidth: 300,
         renderCell: (params) => (
-            <Box sx={{display:"flex", width: "40%", alignItems:"center", justifyContent:"space-evenly"}}>
-                {showDeleteButton && handleDelete && <Button variant="contained" color="error" onClick={() => handleDelete?.(params.row)}>Delete</Button>}
+            <Box sx={{display:"flex", alignItems:"center", justifyContent:"space-evenly", gap: 3}}>
                 {showEditButton && handleEdit && <Button variant="contained" color="primary" onClick={() => handleEdit?.(params.row)}>Edit</Button>}
+                {showDeleteButton && handleDelete && <Button variant="contained" color="error" onClick={() => handleOpenDeleteDialog(params.row)}>Delete</Button>}
                 {actions && actions(params.row).map((component, index) => (
                     <Box key={index} sx={{marginLeft: "10px"}}>
                         {component}
@@ -46,6 +48,25 @@ export function ListItems<T>({
         )
     } as GridColDef);
 
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [rowToDelete, setRowToDelete] = useState<T | null>(null);
+
+    const handleOpenDeleteDialog = (row : any) => {
+        setOpenDeleteDialog(true);
+        setRowToDelete(row);
+    };
+
+    const handleCloseDeleteDialog = () => {
+        setOpenDeleteDialog(false);
+    };
+
+    const handleDeleteButton = () => {
+        if (handleDelete && rowToDelete) {
+            handleDelete(rowToDelete);
+            setOpenDeleteDialog(false);
+            setRowToDelete(null);
+        }
+    }
     return (
         <Box sx={{ height: 400, width: '100%' }}>
             <DataGrid
@@ -62,6 +83,22 @@ export function ListItems<T>({
                 }}
                 pageSizeOptions={[5, 10, 25]}
             />
+            <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
+                <DialogTitle>Confirm Delete</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this item?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDeleteDialog} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleDeleteButton} color="secondary">
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }

@@ -1,7 +1,9 @@
-import {Avatar, Box, Grid, Typography} from "@mui/material";
+import {Avatar, Box, Button, Grid, Typography} from "@mui/material";
 import DashboardOption from "./dashboardOption";
 import {BarChart, CalendarToday, FitnessCenter, Newspaper, Person} from "@mui/icons-material";
 import React from "react";
+import {logout} from "../../store/auth/authSlice";
+import {useDispatch} from "react-redux";
 
 type DashboardMenuProps = {
     changeMenu: (option:string) => void;
@@ -9,45 +11,47 @@ type DashboardMenuProps = {
 }
 
 export const DashboardMenu = ({user, changeMenu} : DashboardMenuProps) => {
+    const dispatch = useDispatch();
+
     return (
         <Box sx={{ p: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
                 <Typography variant="h4" component="h4" sx={{ flexGrow: 1 }}>
                     Welcome{user && " "+ user}!
                 </Typography>
-                <Avatar sx={{ ml: 2 }}>JD</Avatar>
+                <Button sx={{ ml: 2 }} color="secondary" onClick={()=> dispatch(logout())}>Logout</Button>
             </Box>
 
             <Grid container spacing={3}>
                 <DashboardOption
-                    title="Calendario de Ejercicios"
-                    description="Planifica tus entrenamientos y realiza un seguimiento de tu progreso en el calendario."
+                    title="Exercise Calendar"
+                    description="Plan your workouts and track your progress on the calendar."
                     changeMenu={changeMenu}
                     option="CALENDAR"
                     icon={<CalendarToday />}
                 />
 
                 <DashboardOption
-                    title="Noticias del Gimnasio"
-                    description="Mantente actualizado con las últimas noticias y anuncios del gimnasio."
+                    title="Gym News"
+                    description="Stay up to date with the latest gym news and announcements."
                     changeMenu={changeMenu}
                     option="NEWS"
                     icon={<Newspaper />}
                 />
 
-                {/*<DashboardOption*/}
-                {/*    title="Rutinas de Ejercicio"*/}
-                {/*    description="Accede a tus rutinas de ejercicio personalizadas y realiza un seguimiento de tu progreso."*/}
-                {/*    changeMenu={changeMenu}*/}
-                {/*    option="MENU"*/}
-                {/*    icon={<FitnessCenter />}*/}
-                {/*/>*/}
+                {/*<DashboardOption
+                  title="Exercise Routines"
+                  description="Access your personalized exercise routines and track your progress."
+                  changeMenu={changeMenu}
+                  option="MENU"
+                  icon={<FitnessCenter />}
+                />*/}
 
                 <DashboardOption
-                    title="Perfil de Usuario"
-                    description="Actualiza tu información personal, foto de perfil y preferencias."
+                    title="User Profile"
+                    description="Update your personal information and change your pass."
                     changeMenu={changeMenu}
-                    option="MENU"
+                    option="PROFILE"
                     icon={<Person />}
                 />
 

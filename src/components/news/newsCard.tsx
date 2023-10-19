@@ -30,7 +30,7 @@ const formatContent = (content: string, maxLength: number): string => {
 
 
 const NewsCard: React.FC<NewsCardProps> = ({ news}) => {
-    const maxSummaryLength = 100;
+    const maxSummaryLength = 200;
     const formattedSummary = formatContent(news.content, maxSummaryLength);
 
     return (

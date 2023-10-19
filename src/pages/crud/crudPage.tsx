@@ -1,8 +1,11 @@
-import React, {Dispatch, SetStateAction} from 'react';
-import { Container, Button, Dialog, DialogTitle, DialogContent } from '@mui/material';
+import React, {Dispatch, SetStateAction, useState} from 'react';
+import {Container, Button, Dialog, DialogTitle, DialogContent, Snackbar} from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import useItems from "../../hooks/useItems";
 import {ListItemsProps} from "../../@types/Props";
+import Typography from "@mui/material/Typography";
+import Alert from '@mui/material/Alert';
+import {SuccessSnackbar} from "./successSnackbar";
 
 export interface GenericPageProps<T> {
     endpoint: string;
@@ -36,10 +39,24 @@ export const GenericPage = <T extends {}>({endpoint, url, defaultItem, formCompo
         setIsCreating((oldValue : boolean) => !oldValue);
         setSelectedItem(defaultItem);
     };
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+
+    const handleShowSuccessSnackbar = () => {
+        setOpenSnackbar(true);
+        setTimeout(() => {
+            setOpenSnackbar(false);
+        }, 3000);
+    };
+
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
+    };
+
 
     const handleOnCancel = () => {
         setIsCreating(false);
-        setSelectedItem(null);
+        setSelectedItem(defaultItem);
+        setSelected(defaultItem);
     }
 
     const handleEdit = (item: T) => {
@@ -51,13 +68,25 @@ export const GenericPage = <T extends {}>({endpoint, url, defaultItem, formCompo
         });
     }
 
+    const onSubmit = (data: T) => {
+        handleCreate(data);
+        setIsCreating(false);
+        setSelectedItem(defaultItem);
+        setSelected(defaultItem);
+        handleShowSuccessSnackbar();
+    }
+
     return (
         <Container sx={{backgroundColor: theme.palette.background.paper, p: 5}}>
-            <Button variant="contained" color="primary" onClick={handleOnClick}>{ isCreating ? "Close form" : "Create New"}</Button>
+            <Typography variant="h5" component="h5" sx={{flexGrow: 1, textAlign: 'center'}}
+                        color={theme.palette.text.primary}>{endpoint.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}</Typography>
+            <Button sx={{marginBottom: 3}} variant="contained" color="primary"
+                    onClick={handleOnClick}>{isCreating ? "Close form" : "Create New"}</Button>
             <Dialog open={isCreating} onClose={handleOnCancel}>
-                    {formComponent({ onSubmit: handleCreate, handleUpdate, selectedItem: selected, onCancel: handleOnCancel})}
+                {formComponent({onSubmit: onSubmit, handleUpdate, selectedItem: selected, onCancel: handleOnCancel})}
             </Dialog>
-            {listComponent({ handleDelete,  items, setSelected, handleEdit})}
+            {listComponent({handleDelete, items, setSelected, handleEdit})}
+            <SuccessSnackbar open={openSnackbar} onClose={handleCloseSnackbar}/>
         </Container>
     );
 };

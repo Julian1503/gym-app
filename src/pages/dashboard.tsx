@@ -11,6 +11,7 @@ import {useSelector} from "react-redux";
 import {CalendarOption} from "../components/dashboard/calendarOption";
 import {ArrowBack} from "@mui/icons-material";
 import NewsOption from "../components/dashboard/newsOption";
+import ProfileOption from "../components/dashboard/profileOption";
 
 type NewsDetailParams = {
     menu: string;
@@ -63,11 +64,11 @@ const Dashboard = () => {
                         <ArrowBack/>
                     </IconButton>
                 )}
-                {menuOption === "MENU" && <DashboardMenu changeMenu={changeMenu} user={userInfo?.email}/>}
+                {menuOption === "MENU" && <DashboardMenu changeMenu={changeMenu} user={userInfo?.fullName}/>}
                 {menuOption === "CALENDAR" && <CalendarOption/>}
                 {menuOption === "NEWS" && <NewsOption/>}
                 {/*{menuOption === "ROUTINE" && <CalendarOption/>}*/}
-                {menuOption === "PROFILE" && <CalendarOption/>}
+                {menuOption === "PROFILE" && <ProfileOption/>}
                 {/*{menuOption === "STATISTICS" && <CalendarOption/>}*/}
             </Box>
         </Box>

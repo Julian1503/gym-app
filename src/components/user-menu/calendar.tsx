@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import './MyCalendar.css';
 import {Add} from "@mui/icons-material";
-import {CalendarEvent} from "../../@types/CalendarEvent";
+import {CalendarEvent, FinishData} from "../../@types/CalendarEvent";
 import EventComponent from "./eventComponent";
 import CalendarToolbar from "./calendarToolbar";
 import {Exercise} from "../../@types/Exercise";
@@ -30,6 +30,8 @@ import FormGrid from "../form/form-grid";
 import {useTheme} from "@mui/material/styles";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
+import FinishExerciseForm from "./finishExerciseForm";
+import {ErrorSnackbar} from "../../pages/crud/errorSnackbar";
 
 type CalendarProps = {
     exercises?: Exercise[];
@@ -40,22 +42,20 @@ type CalendarProps = {
 
 const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planId, fetchEvents}) => {
     const apiService =  ApiService.getInstance();
-    moment.utc();
     const token = useSelector<RootState, string | null>(state => state.auth.token);
+    moment.utc();
     const [events, setEvents] = useState<CalendarEvent[]>([]);
     const [selectedEvent, setSelectedEvent] = useState<number>(0);
     const [open, setOpen] = useState(false);
     const [sortedEvents, setSortedEvents] = useState<CalendarEvent[]>([]);
     const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
-    const [duration, setDuration] = useState('00:00');
     const [warmUp, setWarmUp] = useState(false);
-    const [repetitions, setRepetitions] = useState(0);
     const [exerciseDate, setExerciseDate] = useState(moment.utc(new Date()).toDate());
-    const [weight, setWeight] = useState(0.0);
-    const [series, setSeries] = useState(0);
     const [calendarHeight, setCalendarHeight] = useState(1020);
     const [date, setDate] = useState(new Date());
+    const [openFinishExerciseForm, setOpenFinishExerciseForm] = useState(false);
     const [view, setView] = useState<View | undefined>('week');
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const minDate = new Date();
     const showNewEventButton = exercises != null && planId != null;
     const theme = useTheme();
@@ -67,11 +67,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
 
     const handleClose = () => {
         setOpen(false);
-        setRepetitions(0);
         setWarmUp(false);
-        setDuration('00:00');
-        setWeight(0.0);
-        setSeries(0);
         setExerciseDate(new Date());
         setSelectedExercise(null);
         setSelectedEvent(0);
@@ -81,11 +77,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
         const response = await apiService.get(`/exercise-day-plan/get/${event.id}`, token)
             .then(res => {
                 const exercise : ExerciseDayPlanDto = res.response;
-                setRepetitions(exercise.repetitions);
                 setWarmUp(exercise.warmup);
-                setDuration(exercise.duration);
-                setWeight(exercise.weight);
-                setSeries(exercise.series);
                 setExerciseDate(new Date(exercise.day + "T00:00:00"));
                 setSelectedExercise(exercises?.find((exercise) => exercise.exerciseId === exercise.exerciseId) || null);
                 setSelectedEvent(event.id || 0);
@@ -103,9 +95,19 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
         }
     }
 
-    const onFinish = (event: CalendarEvent) => {
-        if(event.id) {
-            apiService.put(`/exercise-day-plan/finish/${event.id}`, null, token)
+    const onFinish = (eventId: number, body: FinishData[]) => {
+        if(eventId) {
+            apiService.put(`/exercise-day-plan/finish/${eventId}`, body, token)
+                .then(res => {
+                    fetchEvents();
+                    setSelectedEvent(0);
+                });
+        }
+    }
+
+    const onRestart = (event: CalendarEvent) => {
+        if(event) {
+            apiService.put(`/exercise-day-plan/restart/${event.id}`, {}, token)
                 .then(res => {
                     fetchEvents();
                     setSelectedEvent(0);
@@ -114,18 +116,13 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
     }
 
     const handleSelect = () => {
-        if (selectedExercise && duration) {
-            exerciseDate.setMinutes(exerciseDate.getMinutes() - exerciseDate.getTimezoneOffset());
+        if (selectedExercise) {
             const exerciseDayPlan = {
                 exerciseDayPlanId: selectedEvent || 0,
                 order: 0,
-                duration: duration,
-                repetitions: repetitions,
-                series: series,
                 warmup: warmUp,
-                weight: weight,
                 finished: false,
-                exerciseId: selectedExercise.exerciseId,
+                exerciseId: selectedExercise?.exerciseId,
                 planId: planId,
                 day: moment.utc(exerciseDate).format('YYYY-MM-DD'),
             } as ExerciseDayPlanDto;
@@ -146,19 +143,19 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
     const handleMove = (eventId: number, up: boolean) => {
         let eventToMove = events.find((event) => event.id === eventId);
         if (!eventToMove) {
-            console.error('No se encontró el evento con el id proporcionado');
+            setErrorMessage('No se encontró el evento con el id proporcionado');
             return;
         }
 
         let newOrder = eventToMove.order + (up ? 1 : -1);
         let eventToSwap = events.find((event) => event.order === newOrder && eventToMove &&  moment(event.start).isSame(eventToMove.start, 'day'));
         if (!eventToSwap) {
-            console.error('No hay evento para intercambiar con el evento proporcionado');
+            setErrorMessage('No hay evento para intercambiar con el evento proporcionado');
             return;
         }
 
         if(eventToMove.finished || eventToSwap.finished) {
-            console.error('No se pueden intercambiar eventos terminados');
+            setErrorMessage('No se pueden intercambiar eventos terminados');
             return;
         }
 
@@ -204,10 +201,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
                 end: new Date(exerciseDayPlan.day + "T00:01:00"),
                 title: exerciseDayPlan.exerciseName,
                 image: undefined,
-                duration: exerciseDayPlan.duration.toString(),
                 finished: exerciseDayPlan.finished,
-                series: exerciseDayPlan.series,
-                repetitions: exerciseDayPlan.repetitions,
             } as CalendarEvent));
             setEvents(calendarEvents);
         };
@@ -225,22 +219,19 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
         // }
     }, [events]);
 
-    const handleTimeChange = (newTime : string) => {
-        let time = newTime.split(':');
-        if (newTime) {
-            const hours = String(time[0]).padStart(2, '0');
-            const minutes = String(time[1]).padStart(2, '0');
-            const seconds = "00"
-            const newDuration = `${hours}:${minutes}:${seconds}`;
-            setDuration(newDuration);
-        } else {
-            setDuration('00:00:00');
-        }
-    };
+    const handleOpenFinished = (selectedEvent: CalendarEvent) => {
+        setOpenFinishExerciseForm(true);
+    }
 
     return (
-        <Box sx={{height: calendarHeight, display: "flex", justifyContent: "center", width: "100%" }}>
+        <Box sx={{height: calendarHeight, display: "flex", justifyContent: "center", width: "100%"}}>
+            <FinishExerciseForm open={openFinishExerciseForm} eventId={selectedEvent} onFinish={onFinish} onClose={()=>setOpenFinishExerciseForm(false)}/>
+            <ErrorSnackbar message={errorMessage} onClose={()=>setErrorMessage(null)}/>
             <Calendar
+                style={{
+                    paddingLeft: 20,
+                    paddingRight:20
+                }}
                 selectable
                 min={minDate}
                 max={minDate}
@@ -253,7 +244,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
                 popup={false}
                 components={{
                     event: (props : EventProps<CalendarEvent>) => (
-                        <EventComponent {...props} onFinish={onFinish} eventSelected={selectedEvent} moveEvent={handleMove} onEdit={handleEdit} onDelete={handleDelete} />
+                        <EventComponent {...props} onRestart={onRestart} onFinish={handleOpenFinished} eventSelected={selectedEvent} moveEvent={handleMove} onEdit={handleEdit} onDelete={handleDelete} />
                     ),
                     toolbar: (props : ToolbarProps<Event, object> ) => (
                             <CalendarToolbar {...props} showAddNew={showNewEventButton} setOpen={setOpen} onChangeDate={onChangeDate}/>)
@@ -302,41 +293,6 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
                             value={exerciseDate}
                             onChange={(date : Date | null) => setExerciseDate(moment.utc(date).toDate() || new Date())}
                             format="yyyy-MM-dd"
-                        />
-                    </FormGrid>
-                    <FormGrid>
-                        <TextField
-                            label="Duration"
-                            type="time"
-                            value={duration}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            inputProps={{
-                                step: 300,
-                            }}
-                            onChange={(event) => handleTimeChange(event.target.value)}
-                        />
-                        <TextField
-                            label="Repetitions"
-                            type="number"
-                            placeholder={"0"}
-                            value={repetitions}
-                            onChange={(event) => setNumberValues(event.target.value, setRepetitions)}
-                        />
-                    </FormGrid>
-                    <FormGrid>
-                        <TextField
-                            label="Series"
-                            type="number"
-                            value={series}
-                            onChange={(event) => setNumberValues(event.target.value, setSeries)}
-                        />
-                        <TextField
-                            label="Weight"
-                            type="number"
-                            value={weight}
-                            onChange={(event) => setWeight(parseFloat(event.target.value))}
                         />
                     </FormGrid>
                     <FormGrid>

@@ -18,6 +18,7 @@ import {ProtectedRoute} from "./pages/login/protectedRoute";
 import {PlanCalendar} from "./components/plan/planCalendar";
 import Dashboard from "./pages/dashboard";
 import NewsDetailPage from "./components/news/NewsDetailPage";
+import {NewsPage} from "./pages/crud/news";
 
 
 
@@ -33,6 +34,7 @@ function App() {
                         <Route element={<Dashboard/>} path="/dashboard"/>
                         <Route element={<ExercisePage/>} path="/exercise"/>
                         <Route element={<SpecialtyPage/>} path="/specialty"/>
+                        <Route element={<NewsPage/>} path="/news"/>
                         <Route element={<TrainerPage/>} path="/trainer"/>
                         <Route element={<MemberPage/>} path="/member"/>
                         <Route element={<MembershipPage/>} path="/membership"/>

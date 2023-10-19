@@ -9,6 +9,8 @@ export type TokenPayload = {
     iat: number;
     email: string;
     scid: number | null;
+    user: number;
+    fullName: string;
 };
 
 export class TokenService {
@@ -21,6 +23,8 @@ export class TokenService {
                     scid: decodedToken.scid,
                     email: decodedToken.email,
                     scope: decodedToken.scope,
+                    user: decodedToken.user,
+                    fullName: decodedToken.fullName,
                 };
             }
             return null;

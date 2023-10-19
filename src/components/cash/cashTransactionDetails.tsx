@@ -1,38 +1,24 @@
-import {useEffect, useState} from "react";
-import ApiService from "../../services/apiService";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/store";
 import {CashTransaction, PaymentType} from "../../@types/CashRegister";
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import Ticket from "./ticket";
 
 type CashTransactionDetailsParams = {
-    cashRegisterId: number;
-    paymentTypes: PaymentType[];
+    cashTransactions: CashTransaction[];
 }
 
-export const CashTransactionDetails = ({cashRegisterId, paymentTypes}: CashTransactionDetailsParams) => {
-    const apiService = ApiService.getInstance();
-    const token = useSelector<RootState, string | null>(state => state.auth.token);
-    const [cashTransactions, setCashTransactions] = useState<CashTransaction[]>([]);
-
-    useEffect(() => {
-        apiService.get(`cash-transaction/get-by-cash-register/${cashRegisterId}`, token)
-            .then(res => {
-                if(res.status === 200) {
-                    setCashTransactions(res.response);
-                }
-            });
-    }, [cashRegisterId]);
-
+export const CashTransactionDetails = ({cashTransactions}: CashTransactionDetailsParams) => {
     return (
-        <TableContainer sx={{marginTop:2}} component={Paper}>
+        <TableContainer sx={{marginTop:2, maxHeight:'300px', overflowY: 'auto'}} component={Paper}>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Fecha</TableCell>
-                        <TableCell align="right">Monto</TableCell>
-                        <TableCell align="right">Tipo</TableCell>
-                        <TableCell align="right">Descripción</TableCell>
+                        <TableCell>Date</TableCell>
+                        <TableCell align="right">Member</TableCell>
+                        <TableCell align="right">Membership</TableCell>
+                        <TableCell align="right">Amount</TableCell>
+                        <TableCell align="right">Type</TableCell>
+                        <TableCell align="right">Description</TableCell>
+                        <TableCell align="center">Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -43,21 +29,22 @@ export const CashTransactionDetails = ({cashRegisterId, paymentTypes}: CashTrans
                         >
                             <TableCell component="th" scope="row">
                                 {
-                                    row.transactionDate.toString().split('T')[0]
+                                    row.transactionDate.toString()
                                 }
                             </TableCell>
+                            <TableCell align="right">{`${row.memberLastname} ${row.memberName}`}</TableCell>
+                            <TableCell align="right">{row.membershipName}</TableCell>
                             <TableCell align="right">{row.amount}</TableCell>
                             <TableCell align="right">
-                                {
-                                paymentTypes.map((paymentType) => (
-                                    paymentType.paymentTypeId === row.paymentTypeId ? paymentType.name : ''
-                                 ))
-                                }
+                                {row.paymentTypeName}
                             </TableCell>
                             <TableCell align="right">{row.description}</TableCell>
+                            <TableCell align="center">
+                                <Ticket transaction={row} />
+                            </TableCell>
                         </TableRow>
                     )) : <TableRow>
-                        <TableCell colSpan={4} align="center">No hay transacciones</TableCell>
+                        <TableCell colSpan={7} align="center">There are not transactions</TableCell>
                     </TableRow>}
                 </TableBody>
             </Table>

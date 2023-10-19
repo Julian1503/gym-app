@@ -46,7 +46,7 @@ const NewsOption: React.FC = () => {
     };
 
     return (
-        <div style={{ padding: 10, height: (420 * itemsPerPage) + "px" }}>
+        <div style={{ padding: 10, height: (420 * itemsPerPage) + "px", minWidth: "80%"}}>
             <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
                 <div style={{ flex: 1, overflowY: "auto" }}>
                     {newsList.length > 0 ? (
@@ -63,7 +63,7 @@ const NewsOption: React.FC = () => {
                             }}
                         >
                             <Typography variant="h6" component="div">
-                                No hay noticias disponibles.
+                                No News Available.
                             </Typography>
                         </Box>
                     )}

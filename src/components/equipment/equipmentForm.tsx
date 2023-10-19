@@ -1,7 +1,7 @@
-import { TextField, Typography, Grid } from '@mui/material';
+import {TextField, Typography, Grid, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 import ApiService from "../../services/apiService";
 import { Equipment } from "../../@types/Equipment";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import { FormContainer } from "../form/form-container";
 import { SubmitButton } from "../form/submit-button";
@@ -65,14 +65,21 @@ export const EquipmentForm: React.FC<FormProps<Equipment>> = ({ onSubmit, select
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            label="Type"
-                            color="primary"
-                            value={type}
-                            onChange={e => setType(e.target.value)}
-                        />
+                        <FormControl sx={{width:"100%"}}>
+                            <InputLabel>Type</InputLabel>
+                            <Select
+                                value={type}
+                                onChange={(e) =>
+                                    setType( e.target.value )
+                                }
+                            >
+                                <MenuItem value="Barbell">Barbell</MenuItem>
+                                <MenuItem value="Dumbbell">Dumbbell</MenuItem>
+                                <MenuItem value="Machine">Machine</MenuItem>
+                                <MenuItem value="Cable">Cable</MenuItem>
+                                <MenuItem value="Bodyweight">Bodyweight</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <TextField

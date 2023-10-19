@@ -13,7 +13,7 @@ export const MembershipList: React.FC<ListItemsProps<Membership>> = ({  items, h
             items={items}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
-            columnNames={["name"]}
+            columnNames={["name", "description", "price", "days"]}
         />
     );
 };

@@ -39,6 +39,19 @@ const NewsDetailPage: React.FC = () => {
         navigator("/dashboard?menu=NEWS");
     };
 
+    const styleLinksInHtml = (html : string) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        const links = doc.querySelectorAll('a');
+        links.forEach((link) => {
+            link.style.color = theme.palette.primary.main; // Color del tema primario
+        });
+
+        return doc.body.innerHTML;
+    };
+
+
     return (
         <Box style={{ width:"100%", background: theme.palette.background.default }}>
             <Container>
@@ -51,10 +64,12 @@ const NewsDetailPage: React.FC = () => {
                     </Typography>
                     <img src={news.imageUrl} alt={news.title} style={{ maxWidth: "100%", marginBottom: "20px" }} />
                     <Typography variant="body1" component="div" sx={{ mb: 2 }}>
-                        <div dangerouslySetInnerHTML={{ __html: news.content }} />
+                        <div
+                            dangerouslySetInnerHTML={{ __html: styleLinksInHtml(news.content) }}
+                        />
                     </Typography>
                     <Button variant="outlined" onClick={handleGoBack} style={{ marginTop: "20px" }}>
-                        Volver a la lista
+                        Go back to News
                     </Button>
                 </Paper>
             </Container>

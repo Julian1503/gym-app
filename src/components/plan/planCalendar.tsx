@@ -6,6 +6,7 @@ import ApiService from "../../services/apiService";
 import {ExerciseDayPlanDto} from "../../@types/ExerciseDayPlan";
 import {Exercise} from "../../@types/Exercise";
 import Calendar from "../user-menu/calendar";
+import {Box, useTheme} from "@mui/system";
 
 
 export const PlanCalendar = () => {
@@ -13,6 +14,7 @@ export const PlanCalendar = () => {
     const token = useSelector((state: RootState) => state.auth.token);
     const [exercisesDayPlan, setExercisesDayPlan] = useState<ExerciseDayPlanDto[]>([]);
     const apiService = ApiService.getInstance();
+    const theme = useTheme();
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const fetchEvents = () => {
         apiService
@@ -30,8 +32,14 @@ export const PlanCalendar = () => {
     const idNumber = parseInt(id || "", 10);
 
     return (
-        <div>
+        <Box
+         sx={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: theme.palette.background.paper
+         }}
+        >
             <Calendar exercises={exercises} fetchEvents={fetchEvents} exerciseDayPlans={exercisesDayPlan} planId={idNumber}/>
-        </div>
+        </Box>
     );
 }

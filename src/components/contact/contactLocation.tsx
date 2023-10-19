@@ -1,10 +1,15 @@
 import React from "react";
 import { Box, Typography, Card, CardContent, IconButton } from '@mui/material';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import {GoogleMap, LoadScript, MarkerF} from '@react-google-maps/api';
 import RoomIcon from '@mui/icons-material/Room';
 import {useTheme} from "@mui/material/styles";
 
 const API_KEY = 'AIzaSyBOmjy3tE8f5sIRxAo3CJMNbffLpBrI9sg';
+
+const center = {
+    lat: 40.712776,
+    lng: -74.005974,
+}
 
 const locations = [
     {
@@ -59,13 +64,14 @@ const ContactLocation = () => {
                     <LoadScript googleMapsApiKey={API_KEY}>
                         <GoogleMap
                             mapContainerStyle={containerStyle}
-                            center={{ lat: -34.397, lng: 150.644 }}
+                            center={center}
                             zoom={12}
                         >
-
-                            <Marker
-                                position={{ lat: -34.397, lng: 150.644 }}
-                            />
+                            {locations.map((location, index) => (
+                                <MarkerF
+                                    position={location.position}
+                                />
+                            ))}
                         </GoogleMap>
                     </LoadScript>
                 </Box>

@@ -68,7 +68,9 @@ export const TrainerForm: React.FC<FormProps<Trainer>> = ({onSubmit, selectedIte
                 specialties,
                 hireDate} as Trainer)
                 .then(res => {
-                onSubmit(res.response);
+                    if(res.status == 200) {
+                        onSubmit(res.response);
+                    }
                 });
         }
         apiService.post('/trainer/create', {
@@ -90,8 +92,10 @@ export const TrainerForm: React.FC<FormProps<Trainer>> = ({onSubmit, selectedIte
             hireDate,
         }, token)
             .then(res => {
-                onSubmit(res.response);
-                setFieldErrors({});
+                if(res.status == 200) {
+                    onSubmit(res.response);
+                    setFieldErrors({});
+                }
             })
             .catch(err => {
                 if (err.message) {

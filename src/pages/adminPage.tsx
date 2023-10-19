@@ -15,6 +15,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import {TokenService} from "../store/auth/token";
 import {useNavigate} from "react-router-dom";
 import {CashRegisterPage} from "./crud/cashRegister";
+import {NewsPage} from "./crud/news";
+import {UserPage} from "./crud/user";
 
 const AdminPage = () => {
     const theme = useTheme();
@@ -85,6 +87,12 @@ const AdminPage = () => {
                     <ListItem onClick={() => handleOptionClick('equipment')}>
                         <ListItemText primary="Equipment" />
                     </ListItem>
+                    <ListItem onClick={() => handleOptionClick('news')}>
+                        <ListItemText primary="News" />
+                    </ListItem>
+                    <ListItem onClick={() => handleOptionClick('user')}>
+                        <ListItemText primary="Users" />
+                    </ListItem>
                 </List>
             </Collapse>
             <ListItem onClick={() => handleOptionClick('cashRegister')}>
@@ -100,7 +108,8 @@ const AdminPage = () => {
                 flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
-                width: "100vw"
+                width: "100vw",
+                height: "100%",
             }}
         >
             <IconButton
@@ -221,6 +230,7 @@ const AdminPage = () => {
                         justifyContent: "center",
                         alignItems: "center",
                         width: "100%",
+                        height: "100%",
                         background: "linear-gradient(135deg, #1F1F21 0%, #2A2A2E 100%)",
                     }}
                 >
@@ -228,10 +238,12 @@ const AdminPage = () => {
                     {selectedOption === 'trainer' && <TrainerPage />}
                     {selectedOption === 'membership' && <MembershipPage />}
                     {selectedOption === 'specialty' && <SpecialtyPage />}
+                    {selectedOption === 'news' && <NewsPage />}
                     {selectedOption === 'plan' && <PlanPage />}
                     {selectedOption === 'exercise' && <ExercisePage />}
                     {selectedOption === 'equipment' && <EquipmentPage />}
                     {selectedOption === 'cashRegister' && <CashRegisterPage />}
+                    {selectedOption === 'user' && <UserPage />}
                 </Box>
             </Box>
         </Box>

@@ -17,7 +17,7 @@ export const CashRegisterPage: React.FC = () => {
     }
 
     return (
-        <Box>
+        <>
             <GenericPage
                 endpoint='cash-register'
                 defaultItem={{
@@ -30,13 +30,27 @@ export const CashRegisterPage: React.FC = () => {
                 listComponent={(props)=><CashRegisterList openHistoryModal={openingHistoryModal} setSelected={props.setSelected} items={props.items}/>}
             />
             {
-                openHistoryModal &&
-                <Modal open={openHistoryModal !== null} onClose={closeHistoryModal}>
-                    <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',  bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4, }}>
-                        <CashRegisterDetail cashRegisterSelected={openHistoryModal} />
-                    </Box>
-                </Modal>
+                openHistoryModal && (
+                    <Modal open={openHistoryModal !== null} onClose={closeHistoryModal}>
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                bgcolor: 'background.paper',
+                                boxShadow: 24,
+                                p: 2,
+                                maxWidth: '90%',
+                                overflowY: 'auto',
+                                maxHeight: '80vh',
+                            }}
+                        >
+                            <CashRegisterDetail cashRegisterSelected={openHistoryModal} />
+                        </Box>
+                    </Modal>
+                )
             }
-        </Box>
+        </>
     );
 };

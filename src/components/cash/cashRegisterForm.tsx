@@ -33,7 +33,6 @@ const CashRegisterForm: React.FC<CashRegisterFormProps> = ({
         const apiService = ApiService.getInstance();
         apiService.get('cash-register/last-registration', token)
             .then(res =>{
-                console.log(res.response)
                 setInitialBalance(res.response.currentBalance);
             });
     }, []);
@@ -41,7 +40,7 @@ const CashRegisterForm: React.FC<CashRegisterFormProps> = ({
     const handleSubmit = () => {
         const apiService = ApiService.getInstance();
         if (initialBalance < 0) {
-            setFieldErrors({ initialBalance: 'El saldo inicial no puede ser negativo' });
+            setFieldErrors({ initialBalance: 'You cannot enter negative values' });
         } else {
             const cashRegister: CashRegister = {
                 cashRegisterId: selectedItem ? selectedItem.cashRegisterId : 0,
@@ -58,7 +57,7 @@ const CashRegisterForm: React.FC<CashRegisterFormProps> = ({
                     if(res.status === 200) {
                         onSubmit(res.response);
                     } else {
-                        setFieldErrors({ openDate: 'Solo se puede crear una caja por dia' });
+                        setFieldErrors({ openDate: 'We just can create one cash register per day' });
                     }
                 })
                 .catch(err => {
@@ -76,13 +75,13 @@ const CashRegisterForm: React.FC<CashRegisterFormProps> = ({
 
     return (
         <Paper elevation={3}>
-            <Box p={3}>
-                <Typography variant="h5" gutterBottom>
+            <Box p={2}>
+                <Typography variant="h5" gutterBottom textAlign="center">
                     Caja Registradora
                 </Typography>
                 <form>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
+                    <Grid container justifyContent="center" alignItems="center" spacing={3}>
+                        <Grid item xs={12} md={8}>
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -95,7 +94,7 @@ const CashRegisterForm: React.FC<CashRegisterFormProps> = ({
                                 helperText={fieldErrors.initialBalance}
                             />
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={8}>
                             <DateField
                                 label="Open Date"
                                 sx={{width: "100%"}}
@@ -106,30 +105,32 @@ const CashRegisterForm: React.FC<CashRegisterFormProps> = ({
                                     style: {color: theme.palette.text.primary},
                                 }}
                             />
-                            <Grid item xs={12} sx={{marginTop: 3}}>
-                                <Grid container justifyContent="center" alignItems="center">
-                                    <Grid item xs={6}>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={handleSubmit}
-                                        >
-                                            Enviar
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Button
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={onCancel}
-                                        >
-                                            Cancelar
-                                        </Button>
-                                    </Grid>
+
+                            {fieldErrors.openDate && (
+                                <Typography variant="body2" color="error">
+                                    {fieldErrors.openDate}
+                                </Typography>
+                            )}
+                        </Grid>
+                            <Grid item xs={12}>
+                                <Grid container justifyContent="center" gap={4} alignItems="center">
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={handleSubmit}
+                                    >
+                                        Enviar
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={onCancel}
+                                    >
+                                        Cancelar
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
                 </form>
             </Box>
         </Paper>

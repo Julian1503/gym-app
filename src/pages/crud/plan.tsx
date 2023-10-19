@@ -9,6 +9,8 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import {Container} from "@mui/system";
 import {useTheme} from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import {SuccessSnackbar} from "./successSnackbar";
 
 export const PlanPage: React.FC = () => {
     const token = useSelector<RootState, string | null>(state => state.auth.token);
@@ -22,9 +24,24 @@ export const PlanPage: React.FC = () => {
         planId: 0,
         name: '',
         memberId: 0,
+        active: true,
         trainers: [],
         dayPlans: [],
     };
+
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+
+    const handleShowSuccessSnackbar = () => {
+        setOpenSnackbar(true);
+        setTimeout(() => {
+            setOpenSnackbar(false);
+        }, 3000);
+    };
+
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
+    };
+
     useEffect(() => {
         const apiService = ApiService.getInstance();
         apiService.get('/member/get-all', token)
@@ -51,14 +68,21 @@ export const PlanPage: React.FC = () => {
 
     const handleSubmit = (plan: Plan) => {
         setIsCreating(false);
+        handleShowSuccessSnackbar();
         if(selectedMemberId) {
             fetchPlans(selectedMemberId);
         }
     };
 
+    const handleUpdate = (plan: Plan) : Promise<Plan> => {
+        const apiService = ApiService.getInstance();
+        return apiService.put(`/plan/update/${plan.planId}`, plan, token)
+            .catch(err => console.error(err));
+    };
+
     const handleDelete = (plan: Plan) => {
         const apiService = ApiService.getInstance();
-        apiService.delete(`/plan/delete/${plan.planId}`, token)
+        return apiService.delete(`/plan/delete/${plan.planId}`, token)
             .then(res => setPlans(plans.filter(plan1=> plan1.planId !== plan.planId)))
             .catch(err => console.error(err));
     };
@@ -86,21 +110,23 @@ export const PlanPage: React.FC = () => {
 
     return (
         <Container sx={{backgroundColor: theme.palette.background.paper, p: 5}}>
+            <Typography variant="h5" component="h5" sx={{ flexGrow: 1, textAlign: 'center', marginBottom: 3 }} color={theme.palette.text.primary}>Plan</Typography>
             <Box sx={{display:"flex", alignItems:"center", width:"100%", justifyContent:"flex-start", gap: 2, mb: 2}}>
                 <Autocomplete
                     sx={{width: "50%"}}
                     options={members}
-                    getOptionLabel={(option) => `${option.name}`}
+                    getOptionLabel={(option) => `${option.name} (ID: ${option.identifier})`}
                     onChange={(event, value) => setSelectedMemberId(value?.personId || null)}
                     renderInput={(params) => <TextField {...params} key={params.id} label="Member" variant="outlined" />}
                     value={members.find(member => member.personId === selectedMemberId) || null}
                 />
-                <Button variant="contained" color="primary" onClick={handleOnClick}>{ isCreating ? "Close form" : "Create New"}</Button>
+                <Button variant="contained" color="primary" disabled={selectedMemberId === null} onClick={handleOnClick}>{ isCreating ? "Close form" : "Create New"}</Button>
             </Box>
             <Dialog open={isCreating} onClose={handleOnCancel}>
-                {selectedMemberId && <PlanForm onSubmit={handleSubmit} selectedItem={selectedItem} onCancel={handleOnCancel} selectedMemberId={selectedMemberId} />}
+                {selectedMemberId && <PlanForm onSubmit={handleSubmit} selectedItem={selectedItem} handleUpdate={handleUpdate} onCancel={handleOnCancel} selectedMemberId={selectedMemberId} />}
             </Dialog>
-            <PlanList items={plans} handleDelete={handleDelete} handleEdit={handleEdit} onSelect={handleSelectMember}  setSelected={setSelectedItem}/>
+            <PlanList fetchPlans={() => fetchPlans(selectedMemberId ? selectedMemberId : 0)} items={plans} handleDelete={handleDelete} handleEdit={handleEdit} onSelect={handleSelectMember}  setSelected={setSelectedItem}/>
+            <SuccessSnackbar open={openSnackbar} onClose={handleCloseSnackbar}/>
         </Container>
     );
 };

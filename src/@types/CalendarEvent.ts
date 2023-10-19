@@ -13,3 +13,12 @@ export interface CalendarEvent extends Event {
     finished: boolean;
 }
 
+export interface FinishData {
+    order: number;
+    repetitions: number;
+    weight: number;
+    rest: string;
+    duration: string;
+    exerciseDayPlanId: number;
+}
+

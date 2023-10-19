@@ -4,16 +4,18 @@ import {Exercise} from "../../@types/Exercise";
 import {useTheme} from "@mui/material/styles";
 import {ListItems} from "../list-item/listItems";
 import {ListItemsProps} from "../../@types/Props";
-import {Specialty} from "../../@types/Specialty";
+import {Member} from "../../@types/Member";
+import {News} from "../../@types/News";
 
 
-export const SpecialtyList: React.FC<ListItemsProps<Specialty>> = ({  items, handleDelete , setSelected, handleEdit}) => {
+export const NewsList: React.FC<ListItemsProps<News>> = ({  items, handleDelete , setSelected, handleEdit}) => {
+
     return (
         <ListItems
             items={items}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
-            columnNames={["name","description"]}
+            columnNames={["title", "description", "subtitle"]}
         />
     );
 };

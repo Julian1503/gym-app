@@ -15,11 +15,12 @@ interface EventProps {
     onEdit: (event: CalendarEvent) => void;
     onDelete: (event: CalendarEvent) => void;
     onFinish: (event: CalendarEvent) => void;
+    onRestart: (event: CalendarEvent) => void;
     moveEvent: (eventId: number, up: boolean) => void;
 }
 
-const EventComponent: React.FC<EventProps> = ({ event, eventSelected, onEdit, onDelete, onFinish, moveEvent }) => {
-    const { id, title, image, duration, finished } = event;
+const EventComponent: React.FC<EventProps> = ({ event, eventSelected, onEdit, onDelete, onRestart, onFinish, moveEvent }) => {
+    const { id, title, image, finished } = event;
     const isSelected = id === eventSelected && !finished;
 
     return  (
@@ -42,9 +43,6 @@ const EventComponent: React.FC<EventProps> = ({ event, eventSelected, onEdit, on
                     <Typography variant="h5" fontWeight={700} component="div" style={{ color: '#3f51b5' }}>
                         {title}
                     </Typography>
-                    <Typography variant="body2" color="secondary">
-                        {`Duration: ${duration.slice(0, duration.length - 3)}`}
-                    </Typography>
                 </CardContent>
                 <Box style={{ position: 'relative', bottom: '5px', right: '5px', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     {!finished ?
@@ -60,8 +58,8 @@ const EventComponent: React.FC<EventProps> = ({ event, eventSelected, onEdit, on
                             </IconButton>
                         </Box> :
                         <Box style={{ }}>
-                            <IconButton size="small" onClick={() => onFinish(event)}>
-                                <ReplayIcon color="success"/>
+                            <IconButton size="small" onClick={() => onRestart(event)}>
+                                <ReplayIcon color="warning"/>
                             </IconButton>
                         </Box>
                     }

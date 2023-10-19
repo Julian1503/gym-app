@@ -15,6 +15,11 @@ export interface CashTransaction {
     description: string;
     cashRegisterId: number;
     paymentTypeId: number;
+    paymentTypeName: string;
+    membershipName: string;
+    memberLastname: string;
+    memberIdentification: string;
+    memberName: string;
 }
 
 export interface PaymentType {

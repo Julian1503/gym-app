@@ -82,6 +82,8 @@ export const PlanForm: React.FC<
         setSelectedTrainers(updatedTrainers);
     };
 
+    console.log(selectedTrainers)
+
     return (
         <form>
             <FormContainer>

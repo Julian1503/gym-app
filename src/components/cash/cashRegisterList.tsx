@@ -15,10 +15,7 @@ import CashRegisterDetail from "./cashRegisterDetail";
 export const CashRegisterList : React.FC<ListItemsProps<CashRegister> & {openHistoryModal: (cashRegister: CashRegister) => void}> = ({  items, openHistoryModal}) => {
     const actions = (cashRegister: CashRegister) : JSX.Element[] => {
         return [
-            <Button variant="contained" color="primary" onClick={() => openHistoryModal(cashRegister)}>History</Button>,
-            cashRegister.open ?
-                <Button variant="contained" color="secondary">Close</Button> :
-                <></>
+            <Button variant="contained" color="primary" onClick={() => openHistoryModal(cashRegister)}>History</Button>
         ];
     };
 

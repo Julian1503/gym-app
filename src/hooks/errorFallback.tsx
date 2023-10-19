@@ -32,7 +32,7 @@ const ErrorFallback: React.FC<ErrorFallbackProps> = ({
                             color="inherit"
                             size="small"
                         >
-                            Volver a intentar
+                            Retry
                         </Button>
                     </>
                 ) : (

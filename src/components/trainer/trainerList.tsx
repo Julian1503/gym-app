@@ -18,7 +18,7 @@ export const TrainerList: React.FC<ListItemsProps<Trainer>> = ({  items, handleD
             items={items}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
-            columnNames={["name"]}
+            columnNames={["name", "lastName", "identifier", "hireDate"]}
         />
     );
 };

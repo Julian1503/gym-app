@@ -7,4 +7,5 @@ export interface Plan {
     memberId: number;
     trainers: Trainer[];
     dayPlans: DayPlan[];
+    active: boolean;
 }

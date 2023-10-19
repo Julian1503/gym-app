@@ -2,7 +2,6 @@ import {Box, Button, Typography} from "@mui/material";
 import React, {useEffect} from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import ParticlesBackground from "./particleBackground";
 
 const font = "Oswald"
 /* The code defines a functional component called `Hero` in TypeScript React. */
@@ -75,15 +74,6 @@ const Hero = () => {
                 >
                     A tool made for you to help you train and achieve your goals.
                 </Typography>
-                <Button
-                    data-aos="fade-right"
-                    data-aos-delay="450"
-                    variant="contained"
-                    color="secondary"
-                    sx={{marginTop: 2, width: "30%", fontSize: {md: "1rem", xs: "0.8rem"}}}
-                >
-                    Join us now!
-                </Button>
             </Box>
             <Box data-aos="fade-up" sx={{
                 display: "flex",

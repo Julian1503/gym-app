@@ -22,7 +22,7 @@ export const MemberPage: React.FC = () => {
                 floor: null,
                 door: null,
                 gender: "",
-                birthDate: null,
+                birthDate: new Date(),
                 user: null,
                 memberNumber: "",
                 joinDate: new Date(),

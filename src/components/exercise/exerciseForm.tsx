@@ -17,7 +17,7 @@ import {Specialty} from "../../@types/Specialty";
 import {Step} from "../../@types/Step";
 import {Equipment} from "../../@types/Equipment";
 import {StepComponent} from "./stepComponent";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import {FormContainer} from "../form/form-container";
 import {SubmitButton} from "../form/submit-button";
@@ -47,7 +47,6 @@ export const ExerciseForm: React.FC<FormProps<Exercise>> = ({onSubmit, selectedI
     const [openSpecialtyDialog, setOpenSpecialtyDialog] = useState(false);
     const [openEquipmentDialog, setOpenEquipmentDialog] = useState(false);
     const [fieldErrors, setFieldErrors] = useState<{ [field: string]: string }>({});
-
     const theme = useTheme();
 
     function fetchFormDependencies() {
@@ -142,18 +141,23 @@ export const ExerciseForm: React.FC<FormProps<Exercise>> = ({onSubmit, selectedI
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            label="Muscle Group"
-                            value={muscleGroup}
-                            helperText={fieldErrors.muscleGroup}
-                            error={Boolean(fieldErrors.muscleGroup)}
-                            onChange={e => setMuscleGroup(e.target.value)}
-                            InputLabelProps={{
-                                style: {color: theme.palette.text.primary},
-                            }}
-                        />
+                        <FormControl sx={{width:"100%"}}>
+                            <InputLabel>Muscle Group</InputLabel>
+                            <Select
+                                value={muscleGroup}
+                                onChange={(e) =>
+                                    setMuscleGroup( e.target.value )
+                                }
+                            >
+                                <MenuItem value="Chest">Chest</MenuItem>
+                                <MenuItem value="Back">Back</MenuItem>
+                                <MenuItem value="Shoulders">Shoulders</MenuItem>
+                                <MenuItem value="Arms">Arms</MenuItem>
+                                <MenuItem value="Legs">Legs</MenuItem>
+                                <MenuItem value="Core">Core</MenuItem>
+                                <MenuItem value="Other">Other</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
