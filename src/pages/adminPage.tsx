@@ -1,4 +1,4 @@
-import { Box, useTheme, List, ListItem, ListItemText, Collapse, IconButton, Drawer } from "@mui/material";
+import {Box, useTheme, List, ListItem, ListItemText, Collapse, IconButton, Drawer, Button} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -17,6 +17,8 @@ import {useNavigate} from "react-router-dom";
 import {CashRegisterPage} from "./crud/cashRegister";
 import {NewsPage} from "./crud/news";
 import {UserPage} from "./crud/user";
+import {useDispatch} from "react-redux";
+import {logout} from "../store/auth/authSlice";
 
 const AdminPage = () => {
     const theme = useTheme();
@@ -25,6 +27,7 @@ const AdminPage = () => {
     const [openMenu, setOpenMenu] = useState(false);
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const user = new TokenService().getTokenPayload();
+    const dispatch = useDispatch();
 
     const handleClick = () => {
         setOpen(!open);
@@ -199,7 +202,17 @@ const AdminPage = () => {
                         textDisplay={{ display: { xs: "none", md: "flex" } }}
                     />
                 </Box>
-                {MenuItems}
+                    {MenuItems}
+                    <Button
+                        color="primary"
+                        sx={{
+                            width: "100%",
+                            height: "40px",
+                        }}
+                        onClick={()=>dispatch(logout())}
+                    >
+                        Logout
+                    </Button>
             </Box>
             <Box
                 sx={{
