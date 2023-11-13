@@ -1,0 +1,134 @@
+.rbc-time-header-gutter, .rbc-slot-selection,.rbc-event-label {
+    display: none;
+}
+
+.rbc-slot-selecting {
+    display: inline;
+    cursor: none;
+}
+
+.rbc-time-header-content, .rbc-time-content, .rbc-time-view{
+    border: none;
+}
+
+.rbc-allday-cell {
+    display: none;
+}
+
+.rbc-header {
+    padding: 0;
+    font-family: 'Roboto', "sans-serif";
+    height: 30px;
+    border-top: 1px solid white;
+}
+
+.rbc-header:first-child{
+    border-left: 1px solid white;
+}
+
+.rbc-header:last-child{
+    border-right: 1px solid white;
+}
+
+.rbc-button-link {
+    font-weight: bold;
+    font-family: 'Oswald', 'Roboto', "sans-serif";
+}
+
+.rbc-time-content:last-child {
+    border-right: 1px solid white;
+}
+
+.rbc-time-content{
+    border-bottom: 1px solid white;
+}
+
+.rbc-event:active {
+    background-color: unset !important;
+}
+
+.rbc-event-tooltip {
+    display: none;
+}
+
+.rbc-selected {
+    background-color: transparent !important;
+}
+
+.rbc-day-slot .rbc-event, .rbc-day-slot .rbc-background-event {
+    border: none !important;
+}
+
+.rbc-events-container:active {
+    background-color: unset !important;
+}
+
+.rbc-event-content {
+    background-color: unset !important;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.my-calendar .rbc-event:focus {
+    outline: none;
+    background: inherit;
+}
+
+.rbc-calendar {
+    background-color: #1F1F21;
+    color: white;
+    width: 80%;
+}
+.rbc-time-view, .rbc-calendar {
+    border-radius: 20px;
+}
+
+.rbc-today {
+    background-color: #2b2b2c;
+}
+
+.rbc-event {
+    background-color:  #1F1F21;
+}
+
+.rbc-day-slot .rbc-event, .rbc-day-slot .rbc-background-event {
+    position: static;
+}
+
+.rbc-event.rbc-event-continues-later {
+    width: 100% !important;
+    margin-left: 0.25rem;
+}
+
+@media (max-width: 1024px) {
+
+    .rbc-event.rbc-event-continues-later {
+        margin:0;
+    }
+
+    .rbc-time-content:last-child {
+        border: none;
+    }
+    .rbc-time-header {
+        display: none;
+    }
+    .rbc-time-view, .rbc-calendar {
+        border-radius: 0px;
+    }
+    .rbc-time-header, .rbc-events-container, .rbc-time-content {
+        border: none;
+    }
+    .rbc-calendar {
+      width: 100%;
+    }
+    .rbc-day-slot .rbc-events-container {
+        margin: 0;
+        position: static;
+    }
+    .rbc-day-slot .rbc-event, .rbc-day-slot .rbc-background-event {
+        position: static;
+    }
+    .rbc-event {
+        width: 100% !important;
+    }
+}

@@ -4,7 +4,7 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["master"]
+    branches: ["development"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -29,9 +29,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install Node.js and NPM
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v2.5.2
         with:
           node-version: '14.x'
+          always-auth: true
+          token: ${{ github.token }}
       - name: Install dependencies
         run: yarn install
       - name: Build app
@@ -40,4 +42,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages
+          token: ${{ github.token }}
+          BUILD_FROM: development
           folder: build
