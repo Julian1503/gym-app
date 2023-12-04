@@ -19,10 +19,10 @@ const CashRegisterDetail: React.FC<CashRegisterDetailParams> = ({cashRegisterSel
     const [cashTransactions, setCashTransactions] = useState<CashTransaction[]>([]);
 
     useEffect(() => {
-        fetchTransactions();
+        if(cashRegister) fetchTransactions();
     }, [cashRegister]);
 
-    const fetchTransactions = () => {
+    function fetchTransactions() {
         apiService.get(`cash-transaction/get-by-cash-register/${cashRegister?.cashRegisterId}`, token)
             .then(res => {
                 if(res.status === 200) {

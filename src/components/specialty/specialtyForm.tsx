@@ -16,7 +16,6 @@ export const SpecialtyForm: FC<FormProps<Specialty>> = ({  onSubmit, selectedIte
     const [description, setDescription] = useState(selectedItem?.description || '');
     const [photoUrl, setPhotoUrl] = useState(selectedItem?.photo || '');
     const [fieldErrors, setFieldErrors] = useState<{ [field: string]: string }>({});
-    const theme = useTheme();
 
     const handleSubmit = () => {
         const apiService = ApiService.getInstance();

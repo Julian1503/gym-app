@@ -4,7 +4,7 @@ import {ListItemsProps} from "../../@types/Props";
 import {Member} from "../../@types/Member";
 
 
-export const MemberList: React.FC<ListItemsProps<Member>> = ({  items, handleDelete , setSelected, handleEdit}) => {
+export const MemberList: React.FC<ListItemsProps<Member>> = ({  items, handleDelete, handleEdit}) => {
     items.forEach(item =>{
         item.memberId = item.personId;
     })

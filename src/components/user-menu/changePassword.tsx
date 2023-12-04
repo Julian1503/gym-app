@@ -22,13 +22,6 @@ const ChangePassword = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [fieldErrors, setFieldErrors] = useState<any>({});
 
-    const handleShowSuccessSnackbar = () => {
-        setOpenSnackbar(true);
-        setTimeout(() => {
-            setOpenSnackbar(false);
-        }, 3000);
-    };
-
     const handleCloseSnackbar = () => {
         setOpenSnackbar(false);
     };

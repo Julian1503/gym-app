@@ -6,7 +6,6 @@ import TimerIcon from "@mui/icons-material/Timer";
 import StarIcon from "@mui/icons-material/Star";
 import {useTheme} from "@mui/material/styles";
 
-const font = "Oswald";
 const features = [
     {
         title: "State-of-the-art Equipment",
@@ -66,11 +65,12 @@ const WhyUs = () => {
             </Box>
             <Grid sx={{display:"flex", flexDirection:{xs:"column",md:"row"}, alignItems:{md:"space-evenly", xs:"center"}, justifyContent:{md:"space-evenly"}}}>
                 {features.map((feature, index) => (
-                    <Grid item xs={12} sm={6} md={3} key={index}>
+                    <Grid item xs={10} sm={5} md={2} key={index}>
                         <Card
                             sx={{
-                                maxWidth: 345,
-                                minHeight: 240,
+                                maxWidth: 260,
+                                minHeight: 260,
+                                maxHeight: 260,
                                 backgroundColor: "#2C2C2E",
                                 borderRadius: "10px",
                                 mb: "1rem"

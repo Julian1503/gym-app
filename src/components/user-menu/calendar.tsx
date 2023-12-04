@@ -49,7 +49,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
     const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
     const [warmUp, setWarmUp] = useState(false);
     const [exerciseDate, setExerciseDate] = useState(moment.utc(new Date()).toDate());
-    const [calendarHeight, setCalendarHeight] = useState(1020);
+    const calendarHeight = 1020;
     const [date, setDate] = useState(new Date());
     const [openFinishExerciseForm, setOpenFinishExerciseForm] = useState(false);
     const [view, setView] = useState<View | undefined>('week');
@@ -72,7 +72,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
     };
 
     const handleEdit = async (event: CalendarEvent) => {
-        const response = await apiService.get(`/exercise-day-plan/get/${event.id}`, token)
+        await apiService.get(`/exercise-day-plan/get/${event.id}`, token)
             .then(res => {
                 const exercise : ExerciseDayPlanDto = res.response;
                 setWarmUp(exercise.warmup);
@@ -86,7 +86,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
     const handleDelete = (event: CalendarEvent) => {
         if(event.id) {
             apiService.delete(`/exercise-day-plan/delete/${event.id}`, token)
-            .then(res => {
+            .then(() => {
                 fetchEvents();
                 setSelectedEvent(0);
             });
@@ -96,7 +96,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
     const onFinish = (eventId: number, body: FinishData[]) => {
         if(eventId) {
             apiService.put(`/exercise-day-plan/finish/${eventId}`, body, token)
-                .then(res => {
+                .then(() => {
                     fetchEvents();
                     setSelectedEvent(0);
                 });
@@ -106,7 +106,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
     const onRestart = (event: CalendarEvent) => {
         if(event) {
             apiService.put(`/exercise-day-plan/restart/${event.id}`, {}, token)
-                .then(res => {
+                .then(() => {
                     fetchEvents();
                     setSelectedEvent(0);
                 });
@@ -125,11 +125,11 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
                 day: moment.utc(exerciseDate).format('YYYY-MM-DD'),
             } as ExerciseDayPlanDto;
             if(selectedEvent) {
-                apiService.put(`/exercise-day-plan/update/${selectedEvent}`, exerciseDayPlan, token).then(x =>
+                apiService.put(`/exercise-day-plan/update/${selectedEvent}`, exerciseDayPlan, token).then(() =>
                     fetchEvents()
                 );
             } else {
-                apiService.post('/exercise-day-plan/create', exerciseDayPlan, token).then(x =>
+                apiService.post('/exercise-day-plan/create', exerciseDayPlan, token).then(() =>
                     fetchEvents()
                 );
             }
@@ -158,18 +158,9 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
         }
 
         apiService.put('/exercise-day-plan/update-order', {eventToMove: eventToMove.id, eventToSwap: eventToSwap.id}, token)
-            .then(res => {
+            .then(() => {
                 fetchEvents();
         });
-    };
-
-    const setNumberValues = (value : string, setValue: Dispatch<SetStateAction<number>>) => {
-      if(value.indexOf("0") === 0 && value.length > 1) {
-          const newValue = value.substring(1, value.length);
-          setValue(parseInt(newValue, 10));
-      }  else {
-          setValue(parseInt(value, 10))
-      }
     };
 
     const onChangeDate = (value: Date | null) => {
@@ -213,14 +204,9 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
     useEffect(() => {
         const sorted = [...events].sort((a, b) => a.order - b.order);
         setSortedEvents(sorted);
-        const numEventsSameDay = events.filter((e) =>
-            moment(e.start).isSame(date, 'day')).length + 1;
-        // if (numEventsSameDay * 268 >= calendarHeight) {
-        //     setCalendarHeight((prevHeight) => prevHeight + 268);
-        // }
     }, [events]);
 
-    const handleOpenFinished = (selectedEvent: CalendarEvent) => {
+    const handleOpenFinished = () => {
         setOpenFinishExerciseForm(true);
     }
 

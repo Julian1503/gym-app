@@ -17,9 +17,8 @@ export const NewsForm: FC<FormProps<News>> = ({ onSubmit, selectedItem, onCancel
     const [content, setContent] = useState(selectedItem?.content || '');
     const [imageUrl, setImageUrl] = useState(selectedItem?.imageUrl || '');
     const [link, setLink] = useState(selectedItem?.link || '');
-    const [newsId, setNewsId] = useState(selectedItem?.newsId);
+    const newsId = selectedItem?.newsId;
     const [fieldErrors, setFieldErrors] = useState<{ [field: string]: string }>({});
-    const theme = useTheme();
 
     const handleSubmit = () => {
         const apiService = ApiService.getInstance();

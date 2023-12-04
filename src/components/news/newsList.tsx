@@ -4,7 +4,7 @@ import {ListItemsProps} from "../../@types/Props";
 import {News} from "../../@types/News";
 
 
-export const NewsList: React.FC<ListItemsProps<News>> = ({  items, handleDelete , setSelected, handleEdit}) => {
+export const NewsList: React.FC<ListItemsProps<News>> = ({  items, handleDelete, handleEdit}) => {
 
     return (
         <ListItems

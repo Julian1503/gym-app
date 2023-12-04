@@ -32,7 +32,7 @@ const useItems = <T extends {}>(
     const handleDelete = (item: T) => {
         const apiService = ApiService.getInstance();
         apiService.delete(`/${endpoint}/delete/${getItemKey(item)}`, token)
-            .then(res => setItems(items.filter(i => getItemKey(i) !== getItemKey(item))))
+            .then(() => setItems(items.filter(i => getItemKey(i) !== getItemKey(item))))
             .catch(err => console.error(err));
     };
 

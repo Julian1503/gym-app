@@ -16,7 +16,7 @@ const NewsOption: FC = () => {
     const token = useSelector<RootState, string | null>((state) => state.auth.token);
     const fetchNews = async (pageNumber: number, items: number) => {
         try {
-            const response = await apiService.get(`/news/get-news-page?page=${pageNumber}&size=${items}&sort=title`, token)
+            await apiService.get(`/news/get-news-page?page=${pageNumber}&size=${items}&sort=title`, token)
                 .then(res => {
                     const page : Page<News> = res.response;
                     setNewsList(page.content);
@@ -40,7 +40,7 @@ const NewsOption: FC = () => {
         fetchNews(currentPage, itemsPerPage).catch((err)=>{
             console.error(err);
         });
-    }, [currentPage, itemsPerPage, token]);
+    }, [currentPage, itemsPerPage, token, fetchNews]);
 
     const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page - 1);

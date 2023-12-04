@@ -33,16 +33,14 @@ export const PlanForm: React.FC<
     const token = useSelector<RootState, string | null>(
         (state) => state.auth.token
     );
-    const theme = useTheme();
-
     const [name, setName] = useState(selectedItem?.name || "");
-    const [planId, setPlanId] = useState(selectedItem?.planId);
-    const [dayPlans, setDayPlans] = useState(selectedItem?.dayPlans || []);
+    const planId = selectedItem?.planId;
+    const dayPlans = selectedItem?.dayPlans || [];
     const [trainers, setTrainers] = useState<Trainer[]>([]);
     const [selectedTrainers, setSelectedTrainers] = useState<Trainer[]>(
         selectedItem?.trainers || []
     );
-    const [memberId, setMemberId] = useState(selectedMemberId || "");
+    const memberId = selectedMemberId || "";
 
     useEffect(() => {
         const apiService = ApiService.getInstance();

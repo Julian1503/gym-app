@@ -1,11 +1,10 @@
 import React from 'react';
 import {Exercise} from "../../@types/Exercise";
-import {useTheme} from "@mui/material/styles";
 import {ListItems} from "../list-item/listItems";
 import {ListItemsProps} from "../../@types/Props";
 
 
-export const ExerciseList: React.FC<ListItemsProps<Exercise>> = ({  items, handleDelete , setSelected, handleEdit}) => {
+export const ExerciseList: React.FC<ListItemsProps<Exercise>> = ({  items, handleDelete , handleEdit}) => {
     return (
         <ListItems
             items={items}

@@ -16,9 +16,8 @@ export const MembershipForm: FC<FormProps<Membership>> = ({ onSubmit, selectedIt
     const [description, setDescription] = useState(selectedItem?.description || '');
     const [days, setDays] = useState(selectedItem?.days || 0);
     const [price, setPrice] = useState(selectedItem?.price || 0);
-    const [membershipId, setMembershipId] = useState(selectedItem?.membershipId);
+    const membershipId = selectedItem?.membershipId;
     const [fieldErrors, setFieldErrors] = useState<{ [field: string]: string }>({});
-    const theme = useTheme();
 
     const handleSubmit = () => {
         const apiService = ApiService.getInstance();

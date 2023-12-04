@@ -32,7 +32,7 @@ export const ExerciseForm: React.FC<FormProps<Exercise>> = ({onSubmit, selectedI
     const token = useSelector<RootState, string | null>(state => state.auth.token);
     const [name, setName] = useState(selectedItem?.name || '');
     const [description, setDescription] = useState(selectedItem?.description || '');
-    const [exerciseId, setExerciseId] = useState(selectedItem?.exerciseId);
+    const exerciseId = selectedItem?.exerciseId;
     const [muscleGroup, setMuscleGroup] = useState(selectedItem?.muscleGroup || '');
     const [difficultyLevel, setDifficultyLevel] = useState(selectedItem?.difficultyLevel || 1);
     const [steps, setSteps] = useState<Step[]>(selectedItem?.steps || []);

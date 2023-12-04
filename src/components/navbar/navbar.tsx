@@ -24,13 +24,9 @@ const StyledToolbar = styled(Toolbar)(({theme}) => ({
 /* The above code is a TypeScript React component that represents a Navbar. It is responsible for rendering the navigation
 bar at the top of the page. */
 const pages = ["services","why us?", "contact us"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const Navbar = () => {
     const [anchorElNav, setAnchorNav] = React.useState<null | HTMLElement>(
             null
-    );
-    const [anchorElUser, setAnchorUser] = React.useState<null | HTMLElement>(
-        null
     );
     const [showShadow, setShowShadow] = React.useState(false);
 
@@ -51,16 +47,9 @@ const Navbar = () => {
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorUser(event.currentTarget);
-    };
 
     const handleCloseNavMenu = () => {
         setAnchorNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorUser(null);
     };
 
     const theme = useTheme();
@@ -70,8 +59,6 @@ const Navbar = () => {
     const handleLoginButton = () => {
         navigator("/login");
     };
-
-    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
     return (
         <AppBar sx={{

@@ -14,7 +14,7 @@ interface EventProps {
     eventSelected: number;
     onEdit: (event: CalendarEvent) => void;
     onDelete: (event: CalendarEvent) => void;
-    onFinish: (event: CalendarEvent) => void;
+    onFinish: () => void;
     onRestart: (event: CalendarEvent) => void;
     moveEvent: (eventId: number, up: boolean) => void;
 }
@@ -47,7 +47,7 @@ const EventComponent: React.FC<EventProps> = ({ event, eventSelected, onEdit, on
                 <Box style={{ position: 'relative', bottom: '5px', right: '5px', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     {!finished ?
                         <Box>
-                            <IconButton size="small" onClick={() => onFinish(event)}>
+                            <IconButton size="small" onClick={() => onFinish()}>
                                 <DoneIcon color="success"/>
                             </IconButton>
                             <IconButton size="small" onClick={() => onEdit(event)}>

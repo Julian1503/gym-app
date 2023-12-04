@@ -34,7 +34,7 @@ const CashRegisterForm: React.FC<CashRegisterFormProps> = ({
             .then(res =>{
                 setInitialBalance(res.response.currentBalance);
             });
-    }, []);
+    }, [token]);
 
     const handleSubmit = () => {
         const apiService = ApiService.getInstance();

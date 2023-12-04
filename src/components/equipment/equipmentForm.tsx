@@ -2,7 +2,6 @@ import {TextField, Typography, Grid, FormControl, InputLabel, Select, MenuItem} 
 import ApiService from "../../services/apiService";
 import { Equipment } from "../../@types/Equipment";
 import React, { useState } from "react";
-import { useTheme } from "@mui/material/styles";
 import { FormContainer } from "../form/form-container";
 import { SubmitButton } from "../form/submit-button";
 import { FormProps } from "../../@types/Props";
@@ -13,7 +12,7 @@ import {AuthState} from "../../store/auth/authSlice";
 export const EquipmentForm: React.FC<FormProps<Equipment>> = ({ onSubmit, selectedItem, onCancel, handleUpdate }) => {
     const token = useSelector<RootState, AuthState>(state => state.auth);
     const [name, setName] = useState(selectedItem?.name || '');
-    const [equipmentId, setEquipmentId] = useState(selectedItem?.equipmentId);
+    const equipmentId = selectedItem?.equipmentId;
     const [type, setType] = useState(selectedItem?.type || '');
     const [quantity, setQuantity] = useState(selectedItem?.quantity || 0);
     const [fieldErrors, setFieldErrors] = useState<{ [field: string]: string }>({});

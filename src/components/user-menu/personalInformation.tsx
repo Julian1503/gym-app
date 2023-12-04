@@ -22,7 +22,6 @@ const PersonalInfo = () => {
     const [editedInfo, setEditedInfo] = useState<Member>({} as Member);
     const apiService =  ApiService.getInstance();
     const token = useSelector<RootState, string | null>(state => state.auth.token);
-    const theme = useTheme();
     const userInfo = new TokenService().getTokenPayload();
 
     useEffect(() => {

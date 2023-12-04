@@ -21,7 +21,7 @@ const NewsDetailPage: React.FC = () => {
     const fetchNews = async (newsId: string | undefined) => {
         try {
             if(newsId == null) return;
-            const response = await apiService.get(`/news/get/${newsId}`, token)
+            await apiService.get(`/news/get/${newsId}`, token)
                 .then(res => {
                     setNews(res.response);
                 });

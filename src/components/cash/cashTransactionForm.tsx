@@ -14,7 +14,6 @@ interface CashTransactionFormProps {
 }
 
 const CashTransactionForm: React.FC<CashTransactionFormProps> = ({ cashRegisterId, paymentTypes , handleSubmit}) => {
-    const [amount, setAmount] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [paymentTypeSelected, setPaymentTypeSelected] = useState<number>(0);
     const apiService = ApiService.getInstance();
@@ -24,9 +23,6 @@ const CashTransactionForm: React.FC<CashTransactionFormProps> = ({ cashRegisterI
     const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
     const [selectedMembership, setSelectedMembership] = useState<Membership | null>(null);
     const [fieldErrors, setFieldErrors] = useState<any>({});
-    const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAmount(event.target.value);
-    };
 
     useEffect(() => {
         const apiService = ApiService.getInstance();
@@ -69,7 +65,7 @@ const CashTransactionForm: React.FC<CashTransactionFormProps> = ({ cashRegisterI
         };
 
       apiService.post('cash-transaction/create', transactionData, token)
-          .then(response => {
+          .then(() => {
                 handleSubmit();
                 setFieldErrors({});
               }
@@ -93,7 +89,6 @@ const CashTransactionForm: React.FC<CashTransactionFormProps> = ({ cashRegisterI
                         disabled
                         fullWidth
                         value={selectedMembership?.price || 0}
-                        onChange={handleAmountChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>

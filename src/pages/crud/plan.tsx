@@ -69,7 +69,7 @@ export const PlanPage: React.FC = () => {
     const handleSubmit = (plan: Plan) => {
         setIsCreating(false);
         handleShowSuccessSnackbar();
-        if(selectedMemberId) {
+        if(selectedMemberId && plan) {
             fetchPlans(selectedMemberId);
         }
     };
@@ -83,11 +83,8 @@ export const PlanPage: React.FC = () => {
     const handleDelete = (plan: Plan) => {
         const apiService = ApiService.getInstance();
         return apiService.delete(`/plan/delete/${plan.planId}`, token)
-            .then(res => setPlans(plans.filter(plan1=> plan1.planId !== plan.planId)))
+            .then(() => setPlans(plans.filter(plan1=> plan1.planId !== plan.planId)))
             .catch(err => console.error(err));
-    };
-
-    const handleSelectMember = (plan: Plan) => {
     };
 
     const handleOnClick = () => {
@@ -125,7 +122,7 @@ export const PlanPage: React.FC = () => {
             <Dialog open={isCreating} onClose={handleOnCancel}>
                 {selectedMemberId && <PlanForm onSubmit={handleSubmit} selectedItem={selectedItem} handleUpdate={handleUpdate} onCancel={handleOnCancel} selectedMemberId={selectedMemberId} />}
             </Dialog>
-            <PlanList fetchPlans={() => fetchPlans(selectedMemberId ? selectedMemberId : 0)} items={plans} handleDelete={handleDelete} handleEdit={handleEdit} onSelect={handleSelectMember}  setSelected={setSelectedItem}/>
+            <PlanList fetchPlans={() => fetchPlans(selectedMemberId ? selectedMemberId : 0)} items={plans} handleDelete={handleDelete} handleEdit={handleEdit}  setSelected={setSelectedItem} onSelect={()=>{}}/>
             <SuccessSnackbar open={openSnackbar} onClose={handleCloseSnackbar}/>
         </Container>
     );
