@@ -58,6 +58,11 @@ const AdminPage = () => {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
+                height: "calc(100% - 40px)",
+                overflow: "auto",
+                overflowX: "hidden",
+                pr: "17px",
+                boxSizing: "content-box",
                 color: theme.palette.text.primary,
                 gap: 2,
             }}
@@ -167,8 +172,11 @@ const AdminPage = () => {
                     gap: 6,
                     alignItems: "center",
                     width: "22rem",
+                    height:"100%",
                     minHeight: "100vh",
+                    maxHeight: "100vh",
                     position: "relative",
+                    overflow: "hidden",
                     display: { xs: "none", md: "flex" },
                 }}
             >
@@ -179,6 +187,7 @@ const AdminPage = () => {
                         justifyContent: "center",
                         alignItems: "center",
                         height: "5rem",
+                        minHeight: "5rem",
                         width: "100%",
                         background: theme.palette.primary.main,
                         position: "relative",
@@ -208,6 +217,8 @@ const AdminPage = () => {
                         sx={{
                             width: "100%",
                             height: "40px",
+                            position: "sticky",
+                            bottom: 0,
                         }}
                         onClick={()=>dispatch(logout())}
                     >
@@ -222,6 +233,7 @@ const AdminPage = () => {
                     flexDirection: "column",
                     width: "100%",
                     minHeight:"100vh",
+                    maxHeight:"100vh",
                     height:"100%"
                 }}
             >

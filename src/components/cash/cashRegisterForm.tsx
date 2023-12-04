@@ -7,7 +7,6 @@ import {DateField} from "@mui/x-date-pickers";
 import ApiService from "../../services/apiService";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
-import IconButton from "@mui/material/IconButton";
 
 interface CashRegisterFormProps {
     onSubmit: (cashRegister: CashRegister) => void;
@@ -77,7 +76,7 @@ const CashRegisterForm: React.FC<CashRegisterFormProps> = ({
         <Paper elevation={3}>
             <Box p={2}>
                 <Typography variant="h5" gutterBottom textAlign="center">
-                    Caja Registradora
+                    Cash Register
                 </Typography>
                 <form>
                     <Grid container justifyContent="center" alignItems="center" spacing={3}>
@@ -119,14 +118,14 @@ const CashRegisterForm: React.FC<CashRegisterFormProps> = ({
                                         color="primary"
                                         onClick={handleSubmit}
                                     >
-                                        Enviar
+                                        Send
                                     </Button>
                                     <Button
                                         variant="contained"
                                         color="secondary"
                                         onClick={onCancel}
                                     >
-                                        Cancelar
+                                        Cancel
                                     </Button>
                                 </Grid>
                             </Grid>

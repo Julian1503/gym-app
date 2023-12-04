@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 import PersonalInfo from "../user-menu/personalInformation";
 import ChangePassword from "../user-menu/changePassword";
 

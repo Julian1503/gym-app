@@ -1,7 +1,7 @@
 import { TextField, Typography, Grid } from '@mui/material';
 import ApiService from "../../services/apiService";
 import { News } from "../../@types/News";
-import { useState } from "react";
+import {FC, useState} from "react";
 import { useTheme } from "@mui/material/styles";
 import { FormContainer } from "../form/form-container";
 import { SubmitButton } from "../form/submit-button";
@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import {RichTextField} from "./richTextField";
 
-export const NewsForm: React.FC<FormProps<News>> = ({ onSubmit, selectedItem, onCancel, handleUpdate }) => {
+export const NewsForm: FC<FormProps<News>> = ({ onSubmit, selectedItem, onCancel, handleUpdate }) => {
     const token = useSelector<RootState, string | null>(state => state.auth.token);
     const [title, setTitle] = useState(selectedItem?.title || '');
     const [subtitle, setSubtitle] = useState(selectedItem?.subtitle || '');

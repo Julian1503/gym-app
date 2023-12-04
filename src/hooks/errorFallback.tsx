@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Typography, Paper, Box, Snackbar, Alert } from '@mui/material';
+import { Button, Typography, Snackbar, Alert } from '@mui/material';
 
 interface ErrorFallbackProps {
     error: Error | null;
@@ -25,7 +25,7 @@ const ErrorFallback: React.FC<ErrorFallbackProps> = ({
             >
                 {error ? (
                     <>
-                        <Typography variant="h6">¡Ups! Algo salió mal:</Typography>
+                        <Typography variant="h6">¡Ups! Something went wrong:</Typography>
                         <Typography>{error.message}</Typography>
                         <Button
                             onClick={() => resetErrorBoundary()}
@@ -37,7 +37,7 @@ const ErrorFallback: React.FC<ErrorFallbackProps> = ({
                     </>
                 ) : (
                     <>
-                        <Typography variant="h6">¡Éxito!</Typography>
+                        <Typography variant="h6">Success !</Typography>
                         <Typography>{successMessage}</Typography>
                     </>
                 )}

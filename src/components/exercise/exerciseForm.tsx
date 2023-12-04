@@ -9,7 +9,6 @@ import {
     Typography,
     Box,
     Grid,
-    Dialog, DialogTitle, DialogContent
 } from '@mui/material';
 import {Exercise} from "../../@types/Exercise";
 import ApiService from "../../services/apiService";
@@ -21,16 +20,13 @@ import React, {useEffect, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import {FormContainer} from "../form/form-container";
 import {SubmitButton} from "../form/submit-button";
-import IconButton from "@mui/material/IconButton";
 import {SpecialtyForm} from "../specialty/specialtyForm";
-import {Add} from "@mui/icons-material";
 import {FormProps} from "../../@types/Props";
 import DialogForm from "../form/dialog";
 import SelectField from "../form/select-field";
 import {EquipmentForm} from "../equipment/equipmentForm";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
-import {Plan} from "../../@types/Plan";
 
 export const ExerciseForm: React.FC<FormProps<Exercise>> = ({onSubmit, selectedItem, onCancel, handleUpdate}) => {
     const token = useSelector<RootState, string | null>(state => state.auth.token);

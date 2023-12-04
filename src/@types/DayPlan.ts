@@ -9,11 +9,11 @@ export interface DayPlan {
     ExerciseDayPlan: ExerciseDayPlan[];
 }
 
-export interface DayPlanDto {
-    dayPlanId: number;
-    dayName: string;
-    finished: boolean;
-    planId: number;
-    day: Date;
-    ExerciseDayPlan: ExerciseDayPlanDto[];
-}
+// export interface DayPlanDto {
+//     dayPlanId: number;
+//     dayName: string;
+//     finished: boolean;
+//     planId: number;
+//     day: Date;
+//     ExerciseDayPlan: ExerciseDayPlanDto[];
+// }

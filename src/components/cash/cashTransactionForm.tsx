@@ -3,7 +3,7 @@ import {Button, TextField, Grid, Typography, Paper, Autocomplete} from '@mui/mat
 import ApiService from "../../services/apiService";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
-import {CashTransaction, PaymentType} from "../../@types/CashRegister";
+import {PaymentType} from "../../@types/CashRegister";
 import {Member} from "../../@types/Member";
 import {Membership} from "../../@types/Membership";
 

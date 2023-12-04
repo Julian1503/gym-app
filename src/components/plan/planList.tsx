@@ -1,14 +1,11 @@
-import React, {useState} from 'react';
-import { List, ListItem, ListItemText, Button } from '@mui/material';
-import {Exercise} from "../../@types/Exercise";
-import {useTheme} from "@mui/material/styles";
+import React from 'react';
+import { Button } from '@mui/material';
 import {ListItems} from "../list-item/listItems";
 import {ListItemsProps} from "../../@types/Props";
 import {Plan} from "../../@types/Plan";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
-import {ExerciseDayPlanDto} from "../../@types/ExerciseDayPlan";
 import ApiService from "../../services/apiService";
 
 

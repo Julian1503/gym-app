@@ -1,13 +1,11 @@
 import {
     TextField,
     Grid,
-    Typography, MenuItem, InputLabel, FormControl, Select, TextFieldProps,
+    Typography,
 } from '@mui/material';
 import {Trainer} from "../../@types/Trainer";
 import ApiService from "../../services/apiService";
-import { useState} from "react";
-import {DatePicker, LocalizationProvider} from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import {FC, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import {FormContainer} from "../form/form-container";
 import {SubmitButton} from "../form/submit-button";
@@ -20,7 +18,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import moment from "moment";
 
-export const TrainerForm: React.FC<FormProps<Trainer>> = ({onSubmit, selectedItem, onCancel, handleUpdate}) => {
+export const TrainerForm: FC<FormProps<Trainer>> = ({onSubmit, selectedItem, onCancel, handleUpdate}) => {
     const token = useSelector<RootState, string | null>(state => state.auth.token);
     const [name, setName] = useState(selectedItem?.name || '');
     const [lastName, setLastName] = useState(selectedItem?.lastName || '');

@@ -27,9 +27,9 @@ export interface PaymentType {
     name: string;
 }
 
-export interface Payment {
-    paymentId: number;
-    amount: number;
-    paymentDate: string;
-    paymentTypeId: number;
-}
+// export interface Payment {
+//     paymentId: number;
+//     amount: number;
+//     paymentDate: string;
+//     paymentTypeId: number;
+// }

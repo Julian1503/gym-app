@@ -5,10 +5,6 @@ export interface AuthState {
     isAuthenticated: boolean;
 }
 
-export interface GetState {
-    auth: AuthState;
-}
-
 const initialState: AuthState = {
     token: localStorage.getItem('token'),
     isAuthenticated: !!localStorage.getItem('token')

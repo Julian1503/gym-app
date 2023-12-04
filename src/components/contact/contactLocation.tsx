@@ -13,7 +13,7 @@ const center = {
 
 const locations = [
     {
-        name: 'Sucursal 1',
+        name: 'Branch 1',
         phone: '+1 (555) 123-4567',
         position: {
             lat: 40.712776,
@@ -21,7 +21,7 @@ const locations = [
         },
     },
     {
-        name: 'Sucursal 2',
+        name: 'Branch 2',
         phone: '+1 (555) 987-6543',
         position: {
             lat: 40.730610,

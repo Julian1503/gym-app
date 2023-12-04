@@ -2,12 +2,12 @@ import {GenericPage} from "./crudPage";
 import {CashRegister} from "../../@types/CashRegister";
 import {CashRegisterList} from "../../components/cash/cashRegisterList";
 import CashRegisterForm from "../../components/cash/cashRegisterForm";
-import {useState} from "react";
+import {FC, useState} from "react";
 import {Box} from "@mui/system";
 import {Modal} from "@mui/material";
 import CashRegisterDetail from "../../components/cash/cashRegisterDetail";
 
-export const CashRegisterPage: React.FC = () => {
+export const CashRegisterPage: FC = () => {
     const [openHistoryModal, setOpenHistoryModal] = useState<CashRegister | null>(null);
     const  openingHistoryModal = (cashRegister: CashRegister) => {
         setOpenHistoryModal(cashRegister);

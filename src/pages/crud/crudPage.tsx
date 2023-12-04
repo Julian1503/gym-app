@@ -1,10 +1,9 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
-import {Container, Button, Dialog, DialogTitle, DialogContent, Snackbar} from '@mui/material';
+import React, {useState} from 'react';
+import {Container, Button, Dialog} from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import useItems from "../../hooks/useItems";
 import {ListItemsProps} from "../../@types/Props";
 import Typography from "@mui/material/Typography";
-import Alert from '@mui/material/Alert';
 import {SuccessSnackbar} from "./successSnackbar";
 
 export interface GenericPageProps<T> {

@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
-import {Calendar, ToolbarProps, View, dateFnsLocalizer, Event, EventProps, momentLocalizer} from 'react-big-calendar'
+import {Calendar, ToolbarProps, View, Event, EventProps, momentLocalizer} from 'react-big-calendar'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment';
@@ -14,11 +14,9 @@ import {
     DialogContent,
     DialogTitle, FormControlLabel,
     Grid,
-    TextField,
     Typography
 } from "@mui/material";
 import './MyCalendar.css';
-import {Add} from "@mui/icons-material";
 import {CalendarEvent, FinishData} from "../../@types/CalendarEvent";
 import EventComponent from "./eventComponent";
 import CalendarToolbar from "./calendarToolbar";
@@ -60,7 +58,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
     const showNewEventButton = exercises != null && planId != null;
     const theme = useTheme();
     minDate.setHours(0, 0, 0);
-    const localizer = momentLocalizer(moment);
+    const dateLocalizer = momentLocalizer(moment);
     const handleNavigate = (newDate : Date) => {
         setDate(newDate);
     };
@@ -143,19 +141,19 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
     const handleMove = (eventId: number, up: boolean) => {
         let eventToMove = events.find((event) => event.id === eventId);
         if (!eventToMove) {
-            setErrorMessage('No se encontró el evento con el id proporcionado');
+            setErrorMessage('Couldnt find the event with that id');
             return;
         }
 
         let newOrder = eventToMove.order + (up ? 1 : -1);
         let eventToSwap = events.find((event) => event.order === newOrder && eventToMove &&  moment(event.start).isSame(eventToMove.start, 'day'));
         if (!eventToSwap) {
-            setErrorMessage('No hay evento para intercambiar con el evento proporcionado');
+            setErrorMessage('There are not events to exchange hours');
             return;
         }
 
         if(eventToMove.finished || eventToSwap.finished) {
-            setErrorMessage('No se pueden intercambiar eventos terminados');
+            setErrorMessage('Cannot exchange hour to an event already finished');
             return;
         }
 
@@ -206,7 +204,10 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
             setEvents(calendarEvents);
         };
 
-        fetchExerciseDayPlans();
+        fetchExerciseDayPlans()
+            .catch((err)=>{
+            console.error(err);
+        });
     }, [exerciseDayPlans]);
 
     useEffect(() => {
@@ -235,7 +236,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
                 selectable
                 min={minDate}
                 max={minDate}
-                localizer={localizer}
+                localizer={dateLocalizer}
                 events={sortedEvents}
                 defaultDate={new Date()}
                 onSelectEvent={(event) => setSelectedEvent(event.id)}
@@ -246,7 +247,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
                     event: (props : EventProps<CalendarEvent>) => (
                         <EventComponent {...props} onRestart={onRestart} onFinish={handleOpenFinished} eventSelected={selectedEvent} moveEvent={handleMove} onEdit={handleEdit} onDelete={handleDelete} />
                     ),
-                    toolbar: (props : ToolbarProps<Event, object> ) => (
+                    toolbar: (props : ToolbarProps ) => (
                             <CalendarToolbar {...props} showAddNew={showNewEventButton} setOpen={setOpen} onChangeDate={onChangeDate}/>)
                 }}
                 views={['week', 'day']}

@@ -113,7 +113,7 @@
         display: none;
     }
     .rbc-time-view, .rbc-calendar {
-        border-radius: 0px;
+        border-radius: 0;
     }
     .rbc-time-header, .rbc-events-container, .rbc-time-content {
         border: none;

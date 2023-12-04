@@ -13,10 +13,7 @@ import {
     TableBody,
     Paper,
 } from '@mui/material';
-import ApiService from "../../services/apiService";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/store";
-import {CalendarEvent, FinishData} from "../../@types/CalendarEvent";
+import {FinishData} from "../../@types/CalendarEvent";
 
 
 interface FinishExerciseFormProps {

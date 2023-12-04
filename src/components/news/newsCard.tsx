@@ -18,12 +18,10 @@ const formatContent = (content: string, maxLength: number): string => {
         ? content.substring(0, maxLength) + '...'
         : content;
 
-    const formattedContent = truncatedContent.replace(
+    return truncatedContent.replace(
         /<a([^>]+)>(.*?)<\/a>/g,
         '<Link$1 class="green-link">$2</Link>'
     );
-
-    return formattedContent;
 };
 
 

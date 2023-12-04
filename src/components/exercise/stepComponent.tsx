@@ -1,6 +1,7 @@
 import {Button, TextField} from '@mui/material';
 import {Step} from "../../@types/Step";
 import {styled} from "@mui/system";
+import {FC} from "react";
 
 interface StepProps {
     step: Step;
@@ -14,7 +15,7 @@ const StepComponentStyled = styled('div')({
     },
 });
 
-export const StepComponent: React.FC<StepProps> = ({ step, onDescriptionChange, onDelete }) => {
+export const StepComponent: FC<StepProps> = ({ step, onDescriptionChange, onDelete }) => {
     return (
         <StepComponentStyled>
             <TextField

@@ -1,11 +1,12 @@
 import Typography from "@mui/material/Typography";
 import AdbIcon from "@mui/icons-material/Adb";
+import {ReactNode} from "react";
 
 type LogoProps = {
     variant: "h5" | "h6",
     href: string,
     sx: object,
-    children: React.ReactNode,
+    children: ReactNode,
     iconDisplay: object,
     textDisplay: object,
 };

@@ -9,7 +9,6 @@ import { FormProps } from "../../@types/Props";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import {AuthState} from "../../store/auth/authSlice";
-import {Specialty} from "../../@types/Specialty";
 
 export const EquipmentForm: React.FC<FormProps<Equipment>> = ({ onSubmit, selectedItem, onCancel, handleUpdate }) => {
     const token = useSelector<RootState, AuthState>(state => state.auth);
@@ -18,7 +17,6 @@ export const EquipmentForm: React.FC<FormProps<Equipment>> = ({ onSubmit, select
     const [type, setType] = useState(selectedItem?.type || '');
     const [quantity, setQuantity] = useState(selectedItem?.quantity || 0);
     const [fieldErrors, setFieldErrors] = useState<{ [field: string]: string }>({});
-    const theme = useTheme();
 
     const handleSubmit = () => {
         const apiService = ApiService.getInstance();
@@ -77,7 +75,7 @@ export const EquipmentForm: React.FC<FormProps<Equipment>> = ({ onSubmit, select
                                 <MenuItem value="Dumbbell">Dumbbell</MenuItem>
                                 <MenuItem value="Machine">Machine</MenuItem>
                                 <MenuItem value="Cable">Cable</MenuItem>
-                                <MenuItem value="Bodyweight">Bodyweight</MenuItem>
+                                <MenuItem value="Bodyweight">Body Weight</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>

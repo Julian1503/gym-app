@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {Box, Button, Card, CardContent, Container, Dialog, DialogContent, Grid, Typography} from '@mui/material';
+import { Button, Card, CardContent, Container, Grid, Typography} from '@mui/material';
 import CashTransactionForm from './cashTransactionForm';
 import {CashRegister, CashTransaction, PaymentType} from "../../@types/CashRegister";
 import {CashTransactionDetails} from "./cashTransactionDetails";
 import ApiService from "../../services/apiService";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
-import Ticket from "./ticket";
 
 type CashRegisterDetailParams = {
     cashRegisterSelected: CashRegister;

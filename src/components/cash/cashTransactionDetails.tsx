@@ -1,5 +1,5 @@
-import {CashTransaction, PaymentType} from "../../@types/CashRegister";
-import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {CashTransaction} from "../../@types/CashRegister";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Ticket from "./ticket";
 
 type CashTransactionDetailsParams = {

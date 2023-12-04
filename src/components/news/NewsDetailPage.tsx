@@ -32,7 +32,10 @@ const NewsDetailPage: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchNews(newsId);
+        fetchNews(newsId)
+            .catch((err)=>{
+                console.error(err);
+            });
     }, [newsId]);
 
     const handleGoBack = () => {

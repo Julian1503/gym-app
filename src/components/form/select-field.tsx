@@ -1,7 +1,7 @@
 import {Grid, FormControl, InputLabel, Select, MenuItem, IconButton, SelectChangeEvent} from '@mui/material';
 import { Add } from '@mui/icons-material';
 import {useTheme} from "@mui/system";
-import {SelectType} from "../../@types/DocumentTypes";
+import {FC} from "react";
 type SingleValue = string | number;
 type MultipleValue = Array<string | number>;
 
@@ -15,7 +15,7 @@ interface SelectFieldProps {
     multiple?: boolean;
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({ id, label, values, selectedValue, onSelectionChange, onAddButtonClick, multiple = true }) => {
+const SelectField: FC<SelectFieldProps> = ({ id, label, values, selectedValue, onSelectionChange, onAddButtonClick, multiple = true }) => {
     const theme = useTheme();
 
     const handleChange = (event: SelectChangeEvent<SingleValue | MultipleValue>) => {

@@ -69,10 +69,10 @@ export const CalendarOption = () => {
             ) : (
                 <div>
                     <Typography variant="h5" component="h2">
-                        No tienes un plan activo.
+                        You dont have active plans
                     </Typography>
                     <Button onClick={()=>setIsCreating(true)} variant="contained" color="primary">
-                        Agregar Plan
+                        Add a plan
                     </Button>
                 </div>
             )}

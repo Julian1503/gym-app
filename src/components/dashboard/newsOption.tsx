@@ -1,14 +1,13 @@
 import NewsCard from "../news/newsCard";
 import { News } from "../../@types/News";
-import { useEffect, useState } from "react";
+import {ChangeEvent, FC, useEffect, useState} from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import ApiService from "../../services/apiService";
 import { Box, Typography, Pagination } from "@mui/material";
 import {Page} from "../../@types/Page";
-import NewsDetailPage from "../news/NewsDetailPage";
 
-const NewsOption: React.FC = () => {
+const NewsOption: FC = () => {
     const [newsList, setNewsList] = useState<News[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(1);
@@ -22,11 +21,11 @@ const NewsOption: React.FC = () => {
                     const page : Page<News> = res.response;
                     setNewsList(page.content);
 
-                    if(page.number != pageNumber) {
+                    if(page.number !== pageNumber) {
                         setCurrentPage(page.number);
                     }
 
-                    if(page.totalPages != totalPages) {
+                    if(page.totalPages !== totalPages) {
                         setTotalPages(page.totalPages);
                     }
                 });
@@ -38,10 +37,12 @@ const NewsOption: React.FC = () => {
 
 
     useEffect(() => {
-        fetchNews(currentPage, itemsPerPage);
+        fetchNews(currentPage, itemsPerPage).catch((err)=>{
+            console.error(err);
+        });
     }, [currentPage, itemsPerPage, token]);
 
-    const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page - 1);
     };
 

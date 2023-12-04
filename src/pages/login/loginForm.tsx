@@ -1,7 +1,7 @@
 import {Avatar, Box, Button, Link, TextField, Typography} from '@mui/material';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import {useTheme} from "@mui/material/styles";
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 import ApiService from "../../services/apiService";
 import {useDispatch} from "react-redux";
 import {login} from "../../store/auth/authSlice";
@@ -73,7 +73,7 @@ const LoginForm = () => {
     //     Implement forgot password logic here
     // };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setFormState({
             ...formState,
             [event.target.name]: event.target.value,

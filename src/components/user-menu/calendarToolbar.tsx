@@ -3,7 +3,7 @@ import {Add, NavigateBefore, NavigateNext, Today} from "@mui/icons-material";
 import React from "react";
 import {ToolbarProps, Event} from "react-big-calendar";
 import {DatePicker} from "@mui/x-date-pickers";
-type CalendarToolbarProps = ToolbarProps<Event, object> & {
+type CalendarToolbarProps = ToolbarProps & {
     onChangeDate: (value: Date | null) => void;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     showAddNew: boolean;

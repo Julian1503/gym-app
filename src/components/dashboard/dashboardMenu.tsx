@@ -1,6 +1,6 @@
-import {Avatar, Box, Button, Grid, Typography} from "@mui/material";
+import {Box, Button, Grid, Typography} from "@mui/material";
 import DashboardOption from "./dashboardOption";
-import {BarChart, CalendarToday, FitnessCenter, Newspaper, Person} from "@mui/icons-material";
+import {CalendarToday, Newspaper, Person} from "@mui/icons-material";
 import React from "react";
 import {logout} from "../../store/auth/authSlice";
 import {useDispatch} from "react-redux";
@@ -54,14 +54,6 @@ export const DashboardMenu = ({user, changeMenu} : DashboardMenuProps) => {
                     option="PROFILE"
                     icon={<Person />}
                 />
-
-                {/*<DashboardOption*/}
-                {/*    title="Estadísticas y Progreso"*/}
-                {/*    description="Visualiza tus estadísticas de progreso y gráficos de seguimiento."*/}
-                {/*    changeMenu={changeMenu}*/}
-                {/*    option="MENU"*/}
-                {/*    icon={<BarChart />}*/}
-                {/*/>*/}
             </Grid>
         </Box>
     );

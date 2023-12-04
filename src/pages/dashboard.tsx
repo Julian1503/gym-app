@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Box, IconButton,
 } from '@mui/material';
@@ -6,24 +6,16 @@ import {useTheme} from "@mui/material/styles";
 import { useLocation } from "react-router-dom";
 import {DashboardMenu} from "../components/dashboard/dashboardMenu";
 import {TokenService} from "../store/auth/token";
-import {RootState} from "../store/store";
-import {useSelector} from "react-redux";
 import {CalendarOption} from "../components/dashboard/calendarOption";
 import {ArrowBack} from "@mui/icons-material";
 import NewsOption from "../components/dashboard/newsOption";
 import ProfileOption from "../components/dashboard/profileOption";
-
-type NewsDetailParams = {
-    menu: string;
-};
-
 
 const Dashboard = () => {
     const theme = useTheme();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const menu = searchParams.get("menu") || "MENU";
-    const token = useSelector<RootState, string | null>(state => state.auth.token);
     const [menuOption, setMenu] = useState<string>(menu);
     const userInfo = new TokenService().getTokenPayload();
     const changeMenu = (option:string) => {
