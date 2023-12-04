@@ -68,11 +68,13 @@ export const GenericPage = <T extends {}>({endpoint, url, defaultItem, formCompo
     }
 
     const onSubmit = (data: T) => {
-        handleCreate(data);
-        setIsCreating(false);
-        setSelectedItem(defaultItem);
-        setSelected(defaultItem);
-        handleShowSuccessSnackbar();
+        if(data) {
+            handleCreate();
+            setIsCreating(false);
+            setSelectedItem(defaultItem);
+            setSelected(defaultItem);
+            handleShowSuccessSnackbar();
+        }
     }
 
     return (

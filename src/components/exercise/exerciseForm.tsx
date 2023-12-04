@@ -45,7 +45,7 @@ export const ExerciseForm: React.FC<FormProps<Exercise>> = ({onSubmit, selectedI
     const [fieldErrors, setFieldErrors] = useState<{ [field: string]: string }>({});
     const theme = useTheme();
 
-    function fetchFormDependencies() {
+    useEffect(() => {
         const apiService = ApiService.getInstance();
         apiService.get('/equipment/get-all', token)
             .then(res => setAvailableEquipments(res.response))
@@ -55,11 +55,7 @@ export const ExerciseForm: React.FC<FormProps<Exercise>> = ({onSubmit, selectedI
             .catch(err => {
                 console.error(err);
             });
-    }
-
-    useEffect(() => {
-        fetchFormDependencies();
-    }, []);
+    }, [token]);
 
 
     const handleSpecialtyCreation = (newSpecialty: Specialty) => {

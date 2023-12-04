@@ -43,14 +43,6 @@ const MenuBar = ({ editor }  : MenuBarProps) => {
         return null
     }
 
-    const addImage = () => {
-        const url = window.prompt('Enter the image URL')
-
-        if (url) {
-            editor.chain().focus().setImage({ src: url }).run()
-        }
-    }
-
     return (
         <div className='menu-bar'>
             <Button

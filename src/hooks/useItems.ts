@@ -21,6 +21,7 @@ const useItems = <T extends {}>(
     }
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         fetchItems();
     }, []);
 
@@ -47,7 +48,7 @@ const useItems = <T extends {}>(
         return (item as any)[idPropertyName];
     };
 
-    const handleCreate = (newItem: T) => {
+    const handleCreate = () => {
         setIsCreating(false);
         fetchItems();
     };

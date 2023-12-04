@@ -18,10 +18,11 @@ const NewsDetailPage: React.FC = () => {
     const token = useSelector<RootState, string | null>((state) => state.auth.token);
     const [news, setNews] = React.useState<News>({} as News);
     const theme = useTheme();
-    const fetchNews = async (newsId: string | undefined) => {
+
+    useEffect(() => {
         try {
             if(newsId == null) return;
-            await apiService.get(`/news/get/${newsId}`, token)
+            apiService.get(`/news/get/${newsId}`, token)
                 .then(res => {
                     setNews(res.response);
                 });
@@ -29,14 +30,7 @@ const NewsDetailPage: React.FC = () => {
         } catch (error) {
             console.error("Error fetching news:", error);
         }
-    };
-
-    useEffect(() => {
-        fetchNews(newsId)
-            .catch((err)=>{
-                console.error(err);
-            });
-    }, [newsId]);
+    }, [newsId, apiService, token]);
 
     const handleGoBack = () => {
         navigator("/dashboard?menu=NEWS");

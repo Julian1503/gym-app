@@ -3,7 +3,6 @@ import { TextField, Typography, Grid } from '@mui/material';
 import ApiService from "../../services/apiService";
 import { Membership } from "../../@types/Membership";
 import {FC, useState} from "react";
-import { useTheme } from "@mui/material/styles";
 import { FormContainer } from "../form/form-container";
 import { SubmitButton } from "../form/submit-button";
 import { FormProps } from "../../@types/Props";

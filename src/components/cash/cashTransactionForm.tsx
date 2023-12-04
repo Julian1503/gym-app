@@ -32,7 +32,7 @@ const CashTransactionForm: React.FC<CashTransactionFormProps> = ({ cashRegisterI
         apiService.get('/membership/get-all', token)
             .then(res => setMemberships(res.response))
             .catch(err => console.error(err));
-    }, []);
+    }, [token]);
 
     const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(event.target.value);

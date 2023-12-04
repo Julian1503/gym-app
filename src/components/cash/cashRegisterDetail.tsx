@@ -19,17 +19,20 @@ const CashRegisterDetail: React.FC<CashRegisterDetailParams> = ({cashRegisterSel
     const [cashTransactions, setCashTransactions] = useState<CashTransaction[]>([]);
 
     useEffect(() => {
-        if(cashRegister) fetchTransactions();
+        if(cashRegister) {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            fetchTransactions();
+        }
     }, [cashRegister]);
 
-    function fetchTransactions() {
+    const fetchTransactions = () => {
         apiService.get(`cash-transaction/get-by-cash-register/${cashRegister?.cashRegisterId}`, token)
             .then(res => {
                 if(res.status === 200) {
                     setCashTransactions(res.response);
                 }
             });
-    }
+    };
 
     const fetchCashRegister = () => {
         apiService.get(`cash-register/get/${cashRegisterSelected.cashRegisterId}`, token)
@@ -47,7 +50,7 @@ const CashRegisterDetail: React.FC<CashRegisterDetailParams> = ({cashRegisterSel
                     setPaymentTypes(res.response);
                 }
             });
-    }, []);
+    }, [apiService, token]);
 
     const handleCloseCashRegister = () => {
         apiService.put(`cash-register/close/${cashRegisterSelected.cashRegisterId}`,{}, token)

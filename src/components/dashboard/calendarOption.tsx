@@ -25,10 +25,11 @@ export const CalendarOption = () => {
             .then((res) => setExerciseDayPlans(res.response));
     }
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         apiService
             .get(`/plan/get-active-plan/${userInfo?.scid}`, token)
             .then((res) => setPlanId(res.response.planId))
-    }, []);
+    }, [apiService, token, userInfo?.scid]);
 
     useEffect(() => {
         if (planId) {
@@ -37,7 +38,7 @@ export const CalendarOption = () => {
                 .get(`/exercise/get-all`, token)
                 .then((res) => setExercises(res.response))
         }
-    }, [planId]);
+    }, [planId, apiService, token, fetchEvents]);
 
 
     const handleSubmit = (plan: Plan) => {

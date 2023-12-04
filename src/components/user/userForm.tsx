@@ -2,7 +2,6 @@ import {TextField, Typography, Grid, Autocomplete} from '@mui/material';
 import ApiService from "../../services/apiService";
 import { User } from "../../@types/User";
 import React, {useEffect, useState} from "react";
-import { useTheme } from "@mui/material/styles";
 import { FormContainer } from "../form/form-container";
 import { SubmitButton } from "../form/submit-button";
 import { FormProps } from "../../@types/Props";
@@ -11,7 +10,7 @@ import { RootState } from "../../store/store";
 import {Member} from "../../@types/Member";
 import {ErrorSnackbar} from "../../pages/crud/errorSnackbar";
 
-export const UsersForm: React.FC<FormProps<User>> = ({ onSubmit, selectedItem, onCancel, handleUpdate }) => {
+export const UsersForm: React.FC<FormProps<User>> = ({ onSubmit, selectedItem, onCancel}) => {
     const token = useSelector<RootState, string | null>(state => state.auth.token);
     const roles = ['Admin', 'User'];
     const [username, setUsername] = useState(selectedItem?.username || '');
@@ -22,14 +21,12 @@ export const UsersForm: React.FC<FormProps<User>> = ({ onSubmit, selectedItem, o
     const [selectedRoles, setSelectedRoles] = useState<string[]>(selectedItem?.roles || []);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const theme = useTheme();
-
     useEffect(() => {
         const apiService = ApiService.getInstance();
         apiService.get('/member/get-all', token)
             .then(res => setMembers(res.response))
             .catch(err => console.error(err));
-    }, []);
+    }, [token]);
 
 
     const handleSubmit = () => {
@@ -45,7 +42,7 @@ export const UsersForm: React.FC<FormProps<User>> = ({ onSubmit, selectedItem, o
                 roles: selectedRoles
             } as User , token)
                 .then(res => {
-                    if(res.status == 200) {
+                    if(res.status === 200) {
                         onSubmit(res.response);
                     } else {
                         setErrorMessage(res.message)

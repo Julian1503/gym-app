@@ -66,7 +66,7 @@ export const TrainerForm: FC<FormProps<Trainer>> = ({onSubmit, selectedItem, onC
                 specialties,
                 hireDate} as Trainer)
                 .then(res => {
-                    if(res.status == 200) {
+                    if(res.status === 200) {
                         onSubmit(res.response);
                     }
                 });
@@ -90,7 +90,7 @@ export const TrainerForm: FC<FormProps<Trainer>> = ({onSubmit, selectedItem, onC
             hireDate,
         }, token)
             .then(res => {
-                if(res.status == 200) {
+                if(res.status === 200) {
                     onSubmit(res.response);
                     setFieldErrors({});
                 }

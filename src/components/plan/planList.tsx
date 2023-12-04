@@ -9,7 +9,7 @@ import {RootState} from "../../store/store";
 import ApiService from "../../services/apiService";
 
 
-export const PlanList: React.FC<ListItemsProps<Plan>  & {onSelect: (plan: Plan) => void, fetchPlans: () => void}> = ({  items, fetchPlans, handleDelete , setSelected, onSelect, handleEdit }) => {
+export const PlanList: React.FC<ListItemsProps<Plan>  & {onSelect: (plan: Plan) => void, fetchPlans: () => void}> = ({  items, fetchPlans, handleDelete , onSelect, handleEdit }) => {
     const editPlan = (plan: Plan) => {
         onSelect(plan);
         handleEdit?.(plan);

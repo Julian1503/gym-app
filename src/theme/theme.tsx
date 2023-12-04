@@ -1,7 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
 const fontPrimary = 'Oswald';
-const fontSecondary = 'Lora';
 
 const theme = createTheme({
     palette: {

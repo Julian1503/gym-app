@@ -47,7 +47,7 @@ const AdminPage = () => {
             if (!user?.scope.includes("admin")) {
                 navigator('/dashboard');
             }
-        }, [])
+        }, [user?.scope, navigator])
 
     const MenuItems = (
         <List

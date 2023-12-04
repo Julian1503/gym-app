@@ -47,7 +47,7 @@ export const PlanPage: React.FC = () => {
         apiService.get('/member/get-all', token)
             .then(res => setMembers(res.response))
             .catch(err => console.error(err));
-    }, []);
+    }, [token]);
 
     useEffect(() => {
         if(selectedMemberId) {

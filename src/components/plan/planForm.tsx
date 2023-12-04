@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import ApiService from "../../services/apiService";
 import { Plan } from "../../@types/Plan";
-import { useTheme } from "@mui/material/styles";
 import { FormContainer } from "../form/form-container";
 import { SubmitButton } from "../form/submit-button";
 import { FormProps } from "../../@types/Props";
@@ -48,7 +47,7 @@ export const PlanForm: React.FC<
             .get("/trainer/get-all", token)
             .then((res) => setTrainers(res.response))
             .catch((err) => console.error(err));
-    }, [selectedMemberId]);
+    }, [selectedMemberId, token]);
 
     const handleSubmit = () => {
         const apiService = ApiService.getInstance();

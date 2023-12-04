@@ -14,14 +14,16 @@ const NewsOption: FC = () => {
     const itemsPerPage = 3;
     const apiService = ApiService.getInstance();
     const token = useSelector<RootState, string | null>((state) => state.auth.token);
-    const fetchNews = async (pageNumber: number, items: number) => {
+
+
+    useEffect(() => {
         try {
-            await apiService.get(`/news/get-news-page?page=${pageNumber}&size=${items}&sort=title`, token)
+            apiService.get(`/news/get-news-page?page=${currentPage}&size=${itemsPerPage}&sort=title`, token)
                 .then(res => {
                     const page : Page<News> = res.response;
                     setNewsList(page.content);
 
-                    if(page.number !== pageNumber) {
+                    if(page.number !== currentPage) {
                         setCurrentPage(page.number);
                     }
 
@@ -33,14 +35,7 @@ const NewsOption: FC = () => {
         } catch (error) {
             console.error("Error fetching news:", error);
         }
-    };
-
-
-    useEffect(() => {
-        fetchNews(currentPage, itemsPerPage).catch((err)=>{
-            console.error(err);
-        });
-    }, [currentPage, itemsPerPage, token, fetchNews]);
+    }, [currentPage, itemsPerPage, token, apiService]);
 
     const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page - 1);

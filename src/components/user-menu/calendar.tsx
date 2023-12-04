@@ -1,5 +1,5 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
-import {Calendar, ToolbarProps, View, Event, EventProps, momentLocalizer} from 'react-big-calendar'
+import React, {useEffect, useState} from 'react';
+import {Calendar, ToolbarProps, View, EventProps, momentLocalizer} from 'react-big-calendar'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment';
@@ -77,7 +77,7 @@ const MyCalendar: React.FC<CalendarProps> = ({exercises, exerciseDayPlans, planI
                 const exercise : ExerciseDayPlanDto = res.response;
                 setWarmUp(exercise.warmup);
                 setExerciseDate(new Date(exercise.day + "T00:00:00"));
-                setSelectedExercise(exercises?.find((exercise) => exercise.exerciseId === exercise.exerciseId) || null);
+                setSelectedExercise(exercises?.find((ex) => ex.exerciseId === exercise.exerciseId) || null);
                 setSelectedEvent(event.id || 0);
                 setOpen(true);
             });

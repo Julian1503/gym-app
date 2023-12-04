@@ -1,4 +1,4 @@
-import {ExerciseDayPlan, ExerciseDayPlanDto} from "./ExerciseDayPlan";
+import {ExerciseDayPlan} from "./ExerciseDayPlan";
 
 export interface DayPlan {
     dayPlanId: number;

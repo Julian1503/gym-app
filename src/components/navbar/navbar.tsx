@@ -12,8 +12,6 @@ import MenuItem from "@mui/material/MenuItem";
 import {styled} from "@mui/material/styles";
 import { useTheme } from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/store";
 import Logo from "./logo";
 
 const StyledToolbar = styled(Toolbar)(({theme}) => ({

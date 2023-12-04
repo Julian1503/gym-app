@@ -4,7 +4,7 @@ import {ListItemsProps} from "../../@types/Props";
 import {User} from "../../@types/User";
 
 
-export const UserList: React.FC<ListItemsProps<User>> = ({  items, handleDelete , setSelected, handleEdit}) => {
+export const UserList: React.FC<ListItemsProps<User>> = ({  items, handleDelete  }) => {
 
     return (
         <ListItems

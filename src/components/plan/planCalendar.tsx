@@ -26,8 +26,9 @@ export const PlanCalendar = () => {
         apiService
             .get(`/exercise/get-all`, token)
             .then((res) => setExercises(res.response))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         fetchEvents();
-    }, []);
+    }, [apiService, token]);
 
     const idNumber = parseInt(id || "", 10);
 

@@ -2,7 +2,6 @@ import {TextField, Typography, Grid} from '@mui/material';
 import ApiService from "../../services/apiService";
 import {Specialty} from "../../@types/Specialty";
 import {FC, useState} from "react";
-import {useTheme} from "@mui/material/styles";
 import { FormContainer } from "../form/form-container";
 import {SubmitButton} from "../form/submit-button";
 import {FormProps} from "../../@types/Props";
@@ -12,7 +11,7 @@ import {RootState} from "../../store/store";
 export const SpecialtyForm: FC<FormProps<Specialty>> = ({  onSubmit, selectedItem, onCancel, handleUpdate}) => {
     const token = useSelector<RootState, string | null>(state => state.auth.token);
     const [name, setName] = useState(selectedItem?.name || '');
-    const [specialtyId, setSpecialtyId] = useState(selectedItem?.specialtyId);
+    const specialtyId  = selectedItem?.specialtyId;
     const [description, setDescription] = useState(selectedItem?.description || '');
     const [photoUrl, setPhotoUrl] = useState(selectedItem?.photo || '');
     const [fieldErrors, setFieldErrors] = useState<{ [field: string]: string }>({});

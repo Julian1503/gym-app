@@ -11,7 +11,6 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import {Member} from "../../@types/Member";
 import {DateField} from "@mui/x-date-pickers";
-import {useTheme} from "@mui/system";
 import {TokenService} from "../../store/auth/token";
 import moment from "moment";
 import MenuItem from "@mui/material/MenuItem";
@@ -33,7 +32,7 @@ const PersonalInfo = () => {
             }).catch(error => {
             console.log(error);
         });
-    }, [])
+    }, [apiService, token])
 
     const handleEdit = () => {
         setEditing(true);
