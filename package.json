@@ -2,11 +2,11 @@
   "name": "gym-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@date-io/date-fns": "^2.16.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/core": "^5.0.0-alpha.54",
     "@mui/icons-material": "^5.11.11",
     "@mui/lab": "^5.0.0-alpha.129",
     "@mui/material": "^5.13.2",
