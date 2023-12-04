@@ -35,7 +35,7 @@ const NewsOption: FC = () => {
         } catch (error) {
             console.error("Error fetching news:", error);
         }
-    }, [currentPage, itemsPerPage, token, apiService]);
+    }, [currentPage, totalPages, itemsPerPage, token, apiService]);
 
     const handlePageChange = (event: ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page - 1);

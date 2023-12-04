@@ -22,11 +22,11 @@ export const PlanCalendar = () => {
             .then((res) => setExercisesDayPlan(res.response));
     }
 
+    // eslint-disale-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         apiService
             .get(`/exercise/get-all`, token)
             .then((res) => setExercises(res.response))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         fetchEvents();
     }, [apiService, token]);
 

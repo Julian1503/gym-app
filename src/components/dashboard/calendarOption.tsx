@@ -24,8 +24,9 @@ export const CalendarOption = () => {
             .get(`/exercise-day-plan/get-by-plan/${planId}`, token)
             .then((res) => setExerciseDayPlans(res.response));
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         apiService
             .get(`/plan/get-active-plan/${userInfo?.scid}`, token)
             .then((res) => setPlanId(res.response.planId))

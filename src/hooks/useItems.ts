@@ -20,8 +20,8 @@ const useItems = <T extends {}>(
             .catch(err => console.error(err));
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         fetchItems();
     }, []);
 

@@ -49,6 +49,7 @@ export const PlanPage: React.FC = () => {
             .catch(err => console.error(err));
     }, [token]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if(selectedMemberId) {
             fetchPlans(selectedMemberId);

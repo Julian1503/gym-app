@@ -25,7 +25,7 @@ class ApiService {
 
     public static getInstance(): ApiService {
         if (!ApiService.instance) {
-            ApiService.instance = new ApiService('http://localhost:10100/api');
+            ApiService.instance = new ApiService('http://52.87.178.113:8080/api');
         }
         return ApiService.instance;
     }

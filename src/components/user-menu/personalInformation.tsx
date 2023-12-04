@@ -32,7 +32,7 @@ const PersonalInfo = () => {
             }).catch(error => {
             console.log(error);
         });
-    }, [apiService, token])
+    }, [apiService, token, userInfo?.scid])
 
     const handleEdit = () => {
         setEditing(true);

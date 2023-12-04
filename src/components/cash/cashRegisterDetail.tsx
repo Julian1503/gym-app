@@ -18,9 +18,9 @@ const CashRegisterDetail: React.FC<CashRegisterDetailParams> = ({cashRegisterSel
     const [paymentTypes, setPaymentTypes] = useState<PaymentType[]>([]);
     const [cashTransactions, setCashTransactions] = useState<CashTransaction[]>([]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if(cashRegister) {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
             fetchTransactions();
         }
     }, [cashRegister]);
