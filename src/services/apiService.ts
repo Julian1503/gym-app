@@ -8,7 +8,7 @@ class ApiService {
 
     private constructor(baseURL: string) {
         this.axiosInstance = axios.create({
-            baseURL: baseURL
+            baseURL: baseURL,
         });
 
         this.axiosInstance.interceptors.response.use(
